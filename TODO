@@ -1,4 +1,5 @@
-o) Write score_expression methods for various packages
+o) Write score_expression method for glmnet
+o) Write examples
 
-o) examples
+o) Write score_expression methods for other packages
 o) tests
