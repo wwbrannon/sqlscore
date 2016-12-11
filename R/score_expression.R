@@ -114,10 +114,12 @@ function(mod, response=NULL)
   } else if(lnk == "logit")
   {
     # L(eta) = 1/(1+exp(-eta))
-    e1 <- as.call(list(as.symbol("*"), -1, lp))
-    e2 <- as.call(list(as.symbol("exp"), e1))
-    e3 <- as.call(list(as.symbol("+"), 1, e2))
-    return(as.call(list(as.symbol("/"), 1, e3)))
+    e1 <- as.call(list(as.symbol("("), lp))
+    e2 <- as.call(list(as.symbol("*"), -1, e1))
+    e3 <- as.call(list(as.symbol("exp"), e2))
+    e4 <- as.call(list(as.symbol("+"), 1, e3))
+    e5 <- as.call(list(as.symbol("("), e4))
+    return(as.call(list(as.symbol("/"), 1, e5)))
   } else if(lnk == "cloglog")
   {
     # L(eta) = 1 - exp(-exp(eta))
@@ -188,10 +190,12 @@ function(mod, response=NULL)
   } else if(cls == "lognet") # family = binomial
   {
     # L(eta) = 1/(1+exp(-eta))
-    e1 <- as.call(list(as.symbol("*"), -1, lp))
-    e2 <- as.call(list(as.symbol("exp"), e1))
-    e3 <- as.call(list(as.symbol("+"), 1, e2))
-    return(as.call(list(as.symbol("/"), 1, e3)))
+    e1 <- as.call(list(as.symbol("("), lp))
+    e2 <- as.call(list(as.symbol("*"), -1, e1))
+    e3 <- as.call(list(as.symbol("exp"), e2))
+    e4 <- as.call(list(as.symbol("+"), 1, e3))
+    e5 <- as.call(list(as.symbol("("), e4))
+    return(as.call(list(as.symbol("/"), 1, e5)))
   } else
   {
     stop("Unsupported model family for cv.glmnet")
