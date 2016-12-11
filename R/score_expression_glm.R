@@ -25,34 +25,34 @@ function(mod, link=NULL)
   } else if(lnk == "log")
   {
     # L(eta) = exp(eta)
-    return(as.call(as.symbol("exp"), lp))
+    return(as.call(list(as.symbol("exp"), lp)))
   } else if(lnk == "sqrt")
   {
     # L(eta) = eta^2
-    return(as.call(as.symbol("^"), lp, 2))
+    return(as.call(list(as.symbol("^"), lp, 2)))
   } else if(lnk == "1/mu^2")
   {
     # L(eta) = 1/sqrt(eta)
-    e1 <- as.call(as.symbol("sqrt"), lp)
-    return(as.call(as.symbol("/"), 1, e1))
+    e1 <- as.call(list(as.symbol("sqrt"), lp))
+    return(as.call(list(as.symbol("/"), 1, e1)))
   } else if(lnk == "inverse")
   {
     # L(eta) = 1/eta
-    return(as.call(as.symbol("/", 1, lp)))
+    return(as.call(list(as.symbol("/"), 1, lp)))
   } else if(lnk == "logit")
   {
     # L(eta) = 1/(1+exp(-eta))
-    e1 <- as.call(as.symbol("-"), lp)
-    e2 <- as.call(as.symbol("exp"), e1)
-    e3 <- as.call(as.symbol("+", 1, e2))
-    return(as.call(as.symbol("/"), 1, e3))
+    e1 <- as.call(list(as.symbol("-"), lp))
+    e2 <- as.call(list(as.symbol("exp"), e1))
+    e3 <- as.call(list(as.symbol("+"), 1, e2))
+    return(as.call(list(as.symbol("/"), 1, e3)))
   } else if(lnk == "cloglog")
   {
     # L(eta) = 1 - exp(-exp(eta))
-    e1 <- as.call(as.symbol("exp"), lp)
-    e2 <- as.call(as.symbol("-"), e1)
-    e3 <- as.call(as.symbol("exp", e2))
-    return(as.call(as.symbol("-", 1, e3)))
+    e1 <- as.call(list(as.symbol("exp"), lp))
+    e2 <- as.call(list(as.symbol("-"), e1))
+    e3 <- as.call(list(as.symbol("exp"), e2))
+    return(as.call(list(as.symbol("-"), 1, e3)))
   } else
   {
     stop(paste0("Unrecognized link function. Hint: try the link argument ",
