@@ -163,12 +163,6 @@ if("mboost" %in% installed.packages())
                       Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.0912283527275175)[[1]]
     expect_equal(linpred(mod2), res)
     
-    dat <- datasets::iris
-    dat$Speciesversicolor <- runif(nrow(dat))
-    mod3 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Width + Species + Speciesversicolor,
-                             data=dat)
-    expect_error(linpred(mod3))
-    
     mod4 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + I(Petal.Length^2) +
                              Petal.Width*Species, data=datasets::iris)
     res <- expression(1 * 3.43698205637091 + Sepal.Width * 0.42137619505081 +
