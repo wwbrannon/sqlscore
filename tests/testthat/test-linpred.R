@@ -164,9 +164,9 @@ if("mboost" %in% installed.packages())
     expect_equal(linpred(mod2), res)
     
     dat <- datasets::iris
-    dat$Speciesvirginica <- runif(nrow(dat))
-    mod3 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Width + Species + Speciesvirginica,
-                          data=dat)
+    dat$Speciesversicolor <- runif(nrow(dat))
+    mod3 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Width + Species + Speciesversicolor,
+                             data=dat)
     expect_error(linpred(mod3))
     
     mod4 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + I(Petal.Length^2) +
