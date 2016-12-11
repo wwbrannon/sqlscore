@@ -1,0 +1,108 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r set-options, echo=FALSE, cache=FALSE}
+library(sqlscore)
+library(knitr)
+
+options(width=80)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-",
+  warning = FALSE,
+  message = FALSE,
+  echo = TRUE,
+  tidy = TRUE,
+  size="small",
+  linewidth=80
+)
+
+# From https://github.com/yihui/knitr-examples/blob/master/077-wrap-output.Rmd
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  # this hook is used only when the linewidth option is not NULL
+  if (!is.null(n <- options$linewidth)) {
+    x = knitr:::split_lines(x)
+    # any lines wider than n should be wrapped
+    if (any(nchar(x) > n)) x = strwrap(x, width = n)
+    x = paste(x, collapse = '\n')
+  }
+  hook_output(x, options)
+})
+```
+
+# sqlscore
+R utilities to score GLMs and related models in SQL.
+
+---
+
+The sqlscore package provides utilities for generating sql queries
+(particularly CREATE TABLE statements) from R model objects. The most important
+use case is generating SQL to score a GLM or related model represented as an R
+object, which is particularly when the amount of scoring data is very large.
+Scoring in the database avoids having to read all of the data into memory (and
+may also avoid other types of I/O overhead).
+
+The SQL-generating functions in sqlscore handle various formula operators, and
+also take care of wrapping the model's linear predictor in the appropriate link
+function. If needed, you can also specify a custom link function.
+
+## Usage:
+The SQL-generating functions create\_statement and select\_statement do what their
+names suggest and generate CREATE TABLE and SELECT statements for model scoring.
+
+If, for example, you have a database table of iris measurements, you can model the
+sepal length and generate predictions as follows:
+```
+mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris)
+
+create_statement(mod, src_table="iris", dest_table="iris_scores")  
+```
+
+```{r, echo = FALSE}
+mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris)
+
+create_statement(mod, src_table="iris", dest_table="iris_scores")  
+```
+
+To get a select statement that's not wrapped in a CREATE TABLE (so that, e.g.,
+you can add your own database-specific pieces of SQL), use select_statement:
+```
+mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris)
+
+create_statement(mod, src_table="iris", dest_table="iris_scores")  
+```
+
+```{r, echo = FALSE}
+mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris)
+
+create_statement(mod, src_table="iris", dest_table="iris_scores")  
+```
+
+Helper functions include linpred(), which generates an R call object representing
+the linear predictor, and score_expression, an S3 generic that handles wrapping
+the linear predictor in the response function.
+
+## Supported model types:
+Specific packages and models that are known to work include: glm and lm from
+package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
+and bayesglm from package:arm.
+
+Default S3 methods are for objects structured like those of class "glm", so
+models not listed here may work if they resemble those objects, but are not 
+guaranteed to.
+
+## Installation:
+Because sqlscore is not (yet) on CRAN, install from github:
+```
+install.packages("devtools")
+devtools::install_github("wwbrannon/sqlscore")
+```
