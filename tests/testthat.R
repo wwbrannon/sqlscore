@@ -1,5 +1,5 @@
 library(testthat)
 library(sqlscore)
 
-test_check("sqlscore")
+#test_check("sqlscore")
 

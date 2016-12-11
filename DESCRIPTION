@@ -14,7 +14,5 @@ Depends:
 Imports:
     dplyr (>= 0.5.0)
 Suggests:
-    testthat,
-    sqldf,
-    RODBC
+    testthat
 RoxygenNote: 5.0.1
