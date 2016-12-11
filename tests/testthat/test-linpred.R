@@ -1,12 +1,12 @@
 context("Linear predictors")
 
 # Always available because it's in package:stats
-test_that("glm offsets are extracted correctly", {
+test_that("glm objects are handled correctly", {
   
 })
 
 # Always available because it's in package:stats
-test_that("lm offsets are extracted correctly", {
+test_that("lm objects are handled correctly", {
   
 })
 
