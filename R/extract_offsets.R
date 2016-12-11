@@ -40,3 +40,13 @@ function(object)
     return(c())
   }
 }
+
+#' @rdname extract_offsets
+#' @method extract_offsets glmboost
+#' @export
+extract_offsets.glmboost <-
+function(object)
+{
+  #mboost doesn't support this
+  c()
+}

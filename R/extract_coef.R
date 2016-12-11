@@ -22,3 +22,16 @@ function(object)
 {
   stats::coef(object)
 }
+
+#' @rdname extract_coef
+#' @method extract_coef glmboost
+#' @export
+extract_coef.glmboost <-
+function(object)
+{
+  #mboost's family objects are very hard to work with, so let's
+  #just handle linear regression
+  stopifnot(object$family@name == "Squared Error (Regression)")
+  
+  stats::coef(object, off2int=TRUE)
+}

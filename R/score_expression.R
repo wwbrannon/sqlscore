@@ -121,8 +121,6 @@ function(mod, link=NULL)
   return(linpred(mod))
 }
 
-#Packages: MASS, arm, bridge, gam, glmboost, glmnet, h20, mgcv, ordinalNet, randomGLM
-
 #' @rdname score_expression
 #' @method score_expression bayesglm
 #' @export
@@ -136,10 +134,14 @@ function(mod, link=NULL)
 }
 
 #' @rdname score_expression
-#' @method score_expression cv.glmnet
+#' @method score_expression glmboost
 #' @export
-score_expression.cv.glmnet <-
+score_expression.glmboost <-
 function(mod, link=NULL)
 {
-  #FIXME
+  #mboost's family objects are very hard to work with, so let's
+  #just handle linear regression
+  stopifnot(mod$family@name == "Squared Error (Regression)")
+  
+  return(linpred(mod))
 }
