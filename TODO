@@ -1,5 +1,3 @@
-o) you should be able to pass through a db connection object for escaping (and running?)
-
 o) Write score_expression methods for various packages
 
 o) examples

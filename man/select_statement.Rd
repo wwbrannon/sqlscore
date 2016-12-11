@@ -5,7 +5,7 @@
 \title{Generate a SELECT statement from a model}
 \usage{
 select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
-  pk = c("id"), link = NULL)
+  pk = c("id"), link = NULL, con = NULL)
 }
 \arguments{
 \item{mod}{A model object providing a coef() method.}
@@ -19,6 +19,8 @@ select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
 \item{pk}{A vector of primary key column names.}
 
 \item{link}{The name of a custom link function to apply to the linear predictor.}
+
+\item{con}{An optional DBI connection to control the details of SQL generation.}
 }
 \value{
 A dplyr SQL object representing the SELECT statement.

@@ -4,7 +4,7 @@
 \alias{fqtn}
 \title{Fully qualify and escape a table name given in parts.}
 \usage{
-fqtn(table, catalog = NULL, schema = NULL)
+fqtn(table, catalog = NULL, schema = NULL, con = NULL)
 }
 \arguments{
 \item{table}{The unqualified table name.}
@@ -12,6 +12,8 @@ fqtn(table, catalog = NULL, schema = NULL)
 \item{catalog}{The catalog name.}
 
 \item{schema}{The schema name.}
+
+\item{con}{An optional DBI connection to control the details of SQL generation}
 }
 \value{
 A dplyr SQL object representing the fully qualified and escaped table name.

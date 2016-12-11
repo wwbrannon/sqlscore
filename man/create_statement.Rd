@@ -6,7 +6,8 @@
 \usage{
 create_statement(mod, dest_table, src_table, dest_schema = NULL,
   dest_catalog = NULL, src_schema = NULL, src_catalog = NULL,
-  drop = FALSE, temporary = FALSE, pk = c("id"), link = NULL)
+  drop = FALSE, temporary = FALSE, pk = c("id"), link = NULL,
+  con = NULL)
 }
 \arguments{
 \item{mod}{A model object providing a coef() method.}
@@ -30,6 +31,8 @@ create_statement(mod, dest_table, src_table, dest_schema = NULL,
 \item{pk}{A vector of primary key column names.}
 
 \item{link}{The name of a custom link function to apply to the linear predictor.}
+
+\item{con}{An optional DBI connection to control the details of SQL generation.}
 }
 \value{
 A dplyr SQL object representing the SELECT statement.
