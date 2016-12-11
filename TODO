@@ -1,6 +1,5 @@
 o) score_expression tests
 o) select_statement tests
-o) create_statement tests
 
 o) test on win-builder (R-devel and R-release)
 o) test on Mac OS
