@@ -50,3 +50,13 @@ function(object)
   #mboost doesn't support this
   c()
 }
+
+#' @rdname extract_offsets
+#' @method extract_offsets cv.glmnet
+#' @export
+extract_offsets.cv.glmnet <-
+function(object)
+{
+  #glmnet doesn't support this either
+  c()
+}

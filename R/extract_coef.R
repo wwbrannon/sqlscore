@@ -35,3 +35,18 @@ function(object)
   
   stats::coef(object, off2int=TRUE)
 }
+
+#' @rdname extract_coef
+#' @method extract_coef cv.glmnet
+#' @export
+extract_coef.cv.glmnet <-
+function(object)
+{
+  cf <- stats::coef(object)
+  
+  val <- as.vector(cf)
+  names(val) <- rownames(cf)
+  
+  #Return only the coefficients that weren't regularized to 0
+  val[which(val != 0)]
+}

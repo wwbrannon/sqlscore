@@ -11,7 +11,8 @@
 #' @return An unevaluated R call object representing the link-inverse function of the linear predictor.
 #' 
 #' @rdname score_expression
-#' @export score_expression
+#' 
+#' @export
 score_expression <-
 function(mod, link=NULL)
 {
@@ -92,7 +93,7 @@ function(mod, link=NULL)
   } else if(lnk == "logit")
   {
     # L(eta) = 1/(1+exp(-eta))
-    e1 <- as.call(list(as.symbol("-"), lp))
+    e1 <- as.call(list(as.symbol("*"), -1, lp))
     e2 <- as.call(list(as.symbol("exp"), e1))
     e3 <- as.call(list(as.symbol("+"), 1, e2))
     return(as.call(list(as.symbol("/"), 1, e3)))
@@ -144,4 +145,34 @@ function(mod, link=NULL)
   stopifnot(mod$family@name == "Squared Error (Regression)")
   
   return(linpred(mod))
+}
+
+#' @rdname score_expression
+#' @method score_expression cv.glmnet
+#' @export
+score_expression.cv.glmnet <-
+function(mod, link=NULL)
+{
+  lp <- linpred(mod)
+  cls <- setdiff(class(mod$glmnet.fit), c("glmnet"))
+  
+  if(cls == "elnet") # family = gaussian
+  {
+    # L(eta) = eta
+    return(lp)
+  } else if(cls == "fishnet") # family = poisson
+  {
+    # L(eta) = exp(eta)
+    return(as.call(list(as.symbol("exp"), lp)))
+  } else if(cls == "lognet") # family = binomial
+  {
+    # L(eta) = 1/(1+exp(-eta))
+    e1 <- as.call(list(as.symbol("*"), -1, lp))
+    e2 <- as.call(list(as.symbol("exp"), e1))
+    e3 <- as.call(list(as.symbol("+"), 1, e2))
+    return(as.call(list(as.symbol("/"), 1, e3)))
+  } else
+  {
+    stop("Unsupported model family for cv.glmnet")
+  }
 }
