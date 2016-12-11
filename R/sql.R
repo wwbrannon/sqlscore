@@ -24,7 +24,8 @@ function(table, catalog=NULL, schema=NULL)
 }
 
 select_statement <-
-function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"))
+function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
+         link=NULL)
 {
   #Fully qualify and escape the src table
   src <- fqtn(src_table, src_catalog, src_schema)
@@ -39,12 +40,14 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"))
     parts[[length(parts) + 1]] <- ", "
   }
   
-  parts[[length(parts) + 1]] <- do.call(dplyr::translate_sql,
-                                        list(score_expression(mod)))
+  se <- score_expression(mod, link=link)
+  parts[[length(parts) + 1]] <- do.call(dplyr::translate_sql, list(se))
   
   parts[[length(parts) + 1]] <- " FROM "
   parts[[length(parts) + 1]] <- src
   
+  #We're leaving off the terminating semicolon to let people more easily
+  #tack on concluding incantations for the select (string munging is great)
   do.call(dplyr::build_sql, parts)
 }
 
@@ -55,7 +58,7 @@ create_statement <-
 function(mod, dest_table, src_table,
          dest_schema=NULL, dest_catalog=NULL, src_schema=NULL,
          src_catalog=NULL, drop=FALSE, temporary=FALSE,
-         pk=c("id"))
+         pk=c("id"), link=NULL)
 {
   #Fully qualify and escape the dest table
   dest <- fqtn(dest_table, dest_catalog, dest_schema)
@@ -71,7 +74,7 @@ function(mod, dest_table, src_table,
              "TABLE ", dest, " AS ")
   
   ss <- select_statement(mod, src_table=src_table, src_schema=src_schema,
-                         src_catalog=src_catalog, pk=pk)
+                         src_catalog=src_catalog, pk=pk, link=link)
   parts <- c(parts, ss)
   
   #We're leaving off the terminating semicolon to let people more easily
