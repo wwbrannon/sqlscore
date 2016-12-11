@@ -2,11 +2,3 @@ o) bugfix: logit expressions like -1 * (...) are getting mangled by translate_sq
 
 o) examples
 o) tests
-
-o) methods for low-priority non-base packages
-  o) bridge
-  o) gam
-  o) h2o
-  o) mgcv
-  o) ordinalNet
-  o) randomGLM
