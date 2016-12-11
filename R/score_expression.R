@@ -1,35 +1,35 @@
 #' Unevaluated prediction expressions for models
 #' 
 #' Generate an unevaluated call corresponding to the predict step of the passed
-#' model. The call represents the link function of the linear predictor in terms
+#' model. The call represents the response function of the linear predictor in terms
 #' of elementary functions on the underlying column names, and is suitable for
 #' direct translation into SQL.
 #' 
 #' @param mod A model object providing a coef() method.
-#' @param link The name of a custom link function to apply to the linear predictor.
+#' @param response The name of a custom response function to apply to the linear predictor.
 #' 
-#' @return An unevaluated R call object representing the link-inverse function of the linear predictor.
+#' @return An unevaluated R call object representing the response function of the linear predictor.
 #' 
 #' @rdname score_expression
 #' 
 #' @export
 score_expression <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
-  #If we've been requested to use a particular link function by name,
+  #If we've been requested to use a particular response function by name,
   #generate a call to it and return that. This lets you use a
   #custom sql function or DB features (e.g., probit) that a) don't
   #have portable sql names, and that b) we can't express in closed form
   #in terms of elementary functions.
-  if(!is.null(link))
+  if(!is.null(response))
   {
     lp <- linpred(mod)
-    return(as.call(list(as.symbol(link), lp)))
+    return(as.call(list(as.symbol(response), lp)))
   }
   
-  #Otherwise, let's figure out what the link should be. If it
+  #Otherwise, let's figure out what the response should be. If it
   #should be something we can't generate in closed form, stop
-  #and suggest using a sql function and the link argument.
+  #and suggest using a sql function and the response argument.
   UseMethod("score_expression")
 }
 
@@ -39,35 +39,35 @@ function(mod, link=NULL)
 #' @method score_expression default
 #' @export
 score_expression.default <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
   stop(paste0("Don't know how to handle object of class ", class(mod),
-              ". Consider using the link argument to score_expression ",
-              "to set the link function by hand."))
+              ". Consider using the response argument to score_expression ",
+              "to set the response function by hand."))
 }
 
 #' @rdname score_expression
 #' @method score_expression glm
 #' @export
 score_expression.glm <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
   lp <- linpred(mod)
   lnk <- mod$family$link
   
-  # The comments give L(eta), the inverse of the link function,
+  # The comments give L(eta), the response / inverse of the link function,
   # in clearer notation.
   if(lnk == "probit")
   {
     # L(eta) does not exist in closed form
-    stop(paste0("Link function does not exist in closed form. Consider ",
-                "using the link argument to score_expression to use a ",
+    stop(paste0("Response function does not exist in closed form. Consider ",
+                "using the response argument to score_expression to use a ",
                 "custom sql function."))
   } else if(lnk == "cauchit")
   {
     # L(eta) does not exist in closed form
-    stop(paste0("Link function does not exist in closed form. Consider ",
-                "using the link argument to score_expression to use a ",
+    stop(paste0("Response function does not exist in closed form. Consider ",
+                "using the response argument to score_expression to use a ",
                 "custom sql function."))
   } else if(lnk == "identity")
   {
@@ -106,7 +106,7 @@ function(mod, link=NULL)
     return(as.call(list(as.symbol("-"), 1, e3)))
   } else
   {
-    stop(paste0("Unrecognized link function. Hint: try the link argument ",
+    stop(paste0("Unrecognized response function. Hint: try the response argument ",
                 "to score_expression to specify the name of a custom or ",
                 "DB-specific SQL function."))
   }
@@ -116,9 +116,9 @@ function(mod, link=NULL)
 #' @method score_expression lm
 #' @export
 score_expression.lm <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
-  #the only possible link function for this object is the identity link
+  #the only possible response function for this object is the identity function
   return(linpred(mod))
 }
 
@@ -126,7 +126,7 @@ function(mod, link=NULL)
 #' @method score_expression bayesglm
 #' @export
 score_expression.bayesglm <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
   #These are also GLM objects; the fit is regularized but the
   #prediction step is the same
@@ -138,10 +138,10 @@ function(mod, link=NULL)
 #' @method score_expression glmboost
 #' @export
 score_expression.glmboost <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
   #mboost's family objects are very hard to work with, so let's
-  #just handle linear regression
+  #just handle linear regression, where the response is the identity
   stopifnot(mod$family@name == "Squared Error (Regression)")
   
   return(linpred(mod))
@@ -151,7 +151,7 @@ function(mod, link=NULL)
 #' @method score_expression cv.glmnet
 #' @export
 score_expression.cv.glmnet <-
-function(mod, link=NULL)
+function(mod, response=NULL)
 {
   lp <- linpred(mod)
   cls <- setdiff(class(mod$glmnet.fit), c("glmnet"))

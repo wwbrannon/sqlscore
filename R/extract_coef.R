@@ -7,7 +7,6 @@
 #' @return Model coefficients as a named numeric vector.
 #' 
 #' @rdname extract_coef
-#' @export extract_coef
 extract_coef <-
 function(object)
 {

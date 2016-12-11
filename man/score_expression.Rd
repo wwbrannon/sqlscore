@@ -10,33 +10,33 @@
 \alias{score_expression.lm}
 \title{Unevaluated prediction expressions for models}
 \usage{
-score_expression(mod, link = NULL)
+score_expression(mod, response = NULL)
 
-\method{score_expression}{default}(mod, link = NULL)
+\method{score_expression}{default}(mod, response = NULL)
 
-\method{score_expression}{glm}(mod, link = NULL)
+\method{score_expression}{glm}(mod, response = NULL)
 
-\method{score_expression}{lm}(mod, link = NULL)
+\method{score_expression}{lm}(mod, response = NULL)
 
-\method{score_expression}{bayesglm}(mod, link = NULL)
+\method{score_expression}{bayesglm}(mod, response = NULL)
 
-\method{score_expression}{glmboost}(mod, link = NULL)
+\method{score_expression}{glmboost}(mod, response = NULL)
 
-\method{score_expression}{cv.glmnet}(mod, link = NULL)
+\method{score_expression}{cv.glmnet}(mod, response = NULL)
 }
 \arguments{
 \item{mod}{A model object providing a coef() method.}
 
-\item{link}{The name of a custom link function to apply to the linear predictor.}
+\item{response}{The name of a custom response function to apply to the linear predictor.}
 }
 \value{
-An unevaluated R call object representing the link-inverse function of the linear predictor.
+An unevaluated R call object representing the response function of the linear predictor.
 
 None
 }
 \description{
 Generate an unevaluated call corresponding to the predict step of the passed
-model. The call represents the link function of the linear predictor in terms
+model. The call represents the response function of the linear predictor in terms
 of elementary functions on the underlying column names, and is suitable for
 direct translation into SQL.
 }

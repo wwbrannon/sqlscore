@@ -8,7 +8,6 @@
 #' @return Model offsets as a numeric vector with all values 1 and formula terms as names.
 #' 
 #' @rdname extract_offsets
-#' @export extract_offsets
 extract_offsets <-
 function(object)
 {

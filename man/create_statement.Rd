@@ -6,7 +6,7 @@
 \usage{
 create_statement(mod, dest_table, src_table, dest_schema = NULL,
   dest_catalog = NULL, src_schema = NULL, src_catalog = NULL,
-  drop = FALSE, temporary = FALSE, pk = c("id"), link = NULL,
+  drop = FALSE, temporary = FALSE, pk = c("id"), response = NULL,
   con = NULL)
 }
 \arguments{
@@ -30,7 +30,7 @@ create_statement(mod, dest_table, src_table, dest_schema = NULL,
 
 \item{pk}{A vector of primary key column names.}
 
-\item{link}{The name of a custom link function to apply to the linear predictor.}
+\item{response}{The name of a custom response function to apply to the linear predictor.}
 
 \item{con}{An optional DBI connection to control the details of SQL generation.}
 }
@@ -41,7 +41,7 @@ A dplyr SQL object representing the SELECT statement.
 Generate a CREATE TABLE statement to score the passed model on a preexisting
 database table. The statement will generate predictions entirely in the
 database, with no need to fetch data into R. Models need not be GLMs, but
-their prediction steps must consist of applying a (link-inverse) function to
+their prediction steps must consist of applying a response function to
 a linear predictor.
 }
 

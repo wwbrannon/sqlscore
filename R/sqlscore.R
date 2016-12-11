@@ -5,16 +5,16 @@
 #' use case is generating SQL to score a model trained via R's formula interface,
 #' which may use formula operators that need to be translated into SQL expressions.
 #' The models scored need not be generalized linear models, strictly speaking, but
-#' their prediction steps must consist of applying a (link-inverse) function to a
+#' their prediction steps must consist of applying a response function to a
 #' linear predictor. The package handles escaping and dealing with formula operators,
-#' and provides a way to use a custom link-inverse function if desired.
+#' and provides a way to use a custom response function if desired.
 #' 
 #' @section Function overview:
 #' The SQL-generating functions create_statement and select_statement do what their
 #' names suggest and generate CREATE TABLE and SELECT statements for model scoring.
 #' Helper functions include linpred(), which generates an R call object representing
 #' the linear predictor, and score_expression, an S3 generic that handles wrapping
-#' the linear predictor in the link-inverse function.
+#' the linear predictor in the response function.
 #'
 #' @docType package
 #' @name sqlscore
@@ -65,7 +65,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' Generate a SELECT statement to score the passed model on a preexisting
 #' database table. The statement will generate predictions entirely in the
 #' database, with no need to fetch data into R. Models need not be GLMs, but
-#' their prediction steps must consist of applying a (link-inverse) function to
+#' their prediction steps must consist of applying a response function to
 #' a linear predictor.
 #' 
 #' @param mod A model object providing a coef() method.
@@ -73,7 +73,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' @param src_schema The DB schema of the source table.
 #' @param src_catalog The DB catalog of the source table.
 #' @param pk A vector of primary key column names.
-#' @param link The name of a custom link function to apply to the linear predictor.
+#' @param response The name of a custom response function to apply to the linear predictor.
 #' @param con An optional DBI connection to control the details of SQL generation.
 #' 
 #' @return A dplyr SQL object representing the SELECT statement.
@@ -81,7 +81,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' @export select_statement
 select_statement <-
 function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
-         link=NULL, con=NULL)
+         response=NULL, con=NULL)
 {
   #Fully qualify and escape the src table
   src <- fqtn(src_table, src_catalog, src_schema, con=con)
@@ -96,7 +96,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
     parts[[length(parts) + 1]] <- ", "
   }
   
-  se <- list(score_expression(mod, link=link), con=con)
+  se <- list(score_expression(mod, response=response), con=con)
   parts[[length(parts) + 1]] <- do.call(dplyr::translate_sql, se)
   
   parts[[length(parts) + 1]] <- " FROM "
@@ -113,7 +113,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' Generate a CREATE TABLE statement to score the passed model on a preexisting
 #' database table. The statement will generate predictions entirely in the
 #' database, with no need to fetch data into R. Models need not be GLMs, but
-#' their prediction steps must consist of applying a (link-inverse) function to
+#' their prediction steps must consist of applying a response function to
 #' a linear predictor.
 #' 
 #' @param mod A model object providing a coef() method.
@@ -126,7 +126,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' @param drop Whether to generate a DROP TABLE IF EXISTS before the CREATE TABLE.
 #' @param temporary Whether the destination table should be a temporary table.
 #' @param pk A vector of primary key column names.
-#' @param link The name of a custom link function to apply to the linear predictor.
+#' @param response The name of a custom response function to apply to the linear predictor.
 #' @param con An optional DBI connection to control the details of SQL generation.
 #' 
 #' @return A dplyr SQL object representing the SELECT statement.
@@ -136,7 +136,7 @@ create_statement <-
 function(mod, dest_table, src_table,
          dest_schema=NULL, dest_catalog=NULL, src_schema=NULL,
          src_catalog=NULL, drop=FALSE, temporary=FALSE,
-         pk=c("id"), link=NULL, con=NULL)
+         pk=c("id"), response=NULL, con=NULL)
 {
   # Ideally, we'd use some kind of object-relational mapper to build
   # this statement rather than just munging text, but the ones available
@@ -156,7 +156,7 @@ function(mod, dest_table, src_table,
              "TABLE ", dest, " AS ")
   
   ss <- select_statement(mod, src_table=src_table, src_schema=src_schema,
-                         src_catalog=src_catalog, pk=pk, link=link, con=con)
+                         src_catalog=src_catalog, pk=pk, response=response, con=con)
   parts <- c(parts, ss)
   
   #We're leaving off the terminating semicolon to let people more easily
