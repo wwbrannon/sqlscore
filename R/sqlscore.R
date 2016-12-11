@@ -20,18 +20,18 @@
 #' @name sqlscore
 NULL
 
-#' Fully qualify and escape a table name given in parts.
-#' 
-#' Given the three canonical parts of a database table name (catalog, schema
-#' and table), escape all three and join them together to produce the fully
-#' qualified table name. Only the table name is required.
-#' 
-#' @param table The unqualified table name.
-#' @param catalog The catalog name.
-#' @param schema The schema name.
-#' @param con An optional DBI connection to control the details of SQL generation
-#' 
-#' @return A dplyr SQL object representing the fully qualified and escaped table name.
+# Fully qualify and escape a table name given in parts.
+# 
+# Given the three canonical parts of a database table name (catalog, schema
+# and table), escape all three and join them together to produce the fully
+# qualified table name. Only the table name is required.
+# 
+# @param table The unqualified table name.
+# @param catalog The catalog name.
+# @param schema The schema name.
+# @param con An optional DBI connection to control the details of SQL generation
+# 
+# @return A dplyr SQL object representing the fully qualified and escaped table name.
 fqtn <-
 function(table, catalog=NULL, schema=NULL, con=NULL)
 {

@@ -1,21 +1,17 @@
-#' Standardized offset extraction
-#' 
-#' Extract model offsets (if present) in a standardized format. The return value is a numeric vector
-#' with formula terms as names and values all 1.
-#' 
-#' @param object An object for which the extraction of model offsets is meaningful.
-#' 
-#' @return Model offsets as a numeric vector with all values 1 and formula terms as names.
-#' 
-#' @rdname extract_offsets
+# Standardized offset extraction
+# 
+# Extract model offsets (if present) in a standardized format. The return value is a numeric vector
+# with formula terms as names and values all 1.
+# 
+# @param object An object for which the extraction of model offsets is meaningful.
+# 
+# @return Model offsets as a numeric vector with all values 1 and formula terms as names.
 extract_offsets <-
 function(object)
 {
   UseMethod("extract_offsets")
 }
 
-#' @rdname extract_offsets
-#' @method extract_offsets default
 #' @export
 extract_offsets.default <-
 function(object)
@@ -40,8 +36,6 @@ function(object)
   }
 }
 
-#' @rdname extract_offsets
-#' @method extract_offsets glmboost
 #' @export
 extract_offsets.glmboost <-
 function(object)
@@ -50,8 +44,6 @@ function(object)
   c()
 }
 
-#' @rdname extract_offsets
-#' @method extract_offsets cv.glmnet
 #' @export
 extract_offsets.cv.glmnet <-
 function(object)

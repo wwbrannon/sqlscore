@@ -1,20 +1,16 @@
-#' Standardized coefficient extraction
-#' 
-#' Extract model coefficients in a standardized format (as a named numeric vector).
-#' 
-#' @param object An object for which the extraction of model coefficients is meaningful.
-#' 
-#' @return Model coefficients as a named numeric vector.
-#' 
-#' @rdname extract_coef
+# Standardized coefficient extraction
+# 
+# Extract model coefficients in a standardized format (as a named numeric vector).
+# 
+# @param object An object for which the extraction of model coefficients is meaningful.
+# 
+# @return Model coefficients as a named numeric vector.
 extract_coef <-
 function(object)
 {
   UseMethod("extract_coef")
 }
 
-#' @rdname extract_coef
-#' @method extract_coef default
 #' @export
 extract_coef.default <-
 function(object)
@@ -22,8 +18,6 @@ function(object)
   stats::coef(object)
 }
 
-#' @rdname extract_coef
-#' @method extract_coef glmboost
 #' @export
 extract_coef.glmboost <-
 function(object)
@@ -35,8 +29,6 @@ function(object)
   stats::coef(object, off2int=TRUE)
 }
 
-#' @rdname extract_coef
-#' @method extract_coef cv.glmnet
 #' @export
 extract_coef.cv.glmnet <-
 function(object)
