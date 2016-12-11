@@ -4,9 +4,14 @@
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs from `R CMD check`.
+There were no ERRORs, WARNINGs or NOTEs from local `R CMD check`.
 
-This is the first submission of this package.
+There was one NOTE from win-builder:
+
+NOTE
+Maintainer: 'William Brannon <will.brannon@gmail.com>'
+
+New submission
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
