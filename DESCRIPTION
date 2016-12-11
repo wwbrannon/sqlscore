@@ -1,0 +1,21 @@
+Package: sqlscore
+Authors@R: c(
+  person("William", "Brannon", , "will.brannon@gmail.com", c("aut", "cre"))
+)
+Version: 0.1.0
+Title: R utilities for generating SQL queries from model objects
+Description: The sqlscore package provides utilities for generating sql
+  queries (particularly CREATE TABLE statements) from R model objects. The
+  most important use case is generating SQL to score a model trained via R's
+  formula interface, which may use formula operators that need to be
+  translated into SQL expressions.
+License: MIT
+URL: https://github.com/wwbrannon/sqlscore/
+BugReports: https://github.com/wwbrannon/sqlscore/issues
+Depends:
+  R (>= 3.2.0),
+  dplyr (>= 0.5.0)
+Suggests:
+  testthat,
+  sqldf,
+  RODBC
