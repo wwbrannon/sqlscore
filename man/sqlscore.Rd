@@ -8,12 +8,12 @@
 \description{
 The sqlscore package provides utilities for generating sql queries
 (particularly CREATE TABLE statements) from R model objects. The most important
-use case is generating SQL to score a model trained via R's formula interface,
-which may use formula operators that need to be translated into SQL expressions.
-The models scored need not be generalized linear models, strictly speaking, but
-their prediction steps must consist of applying a response function to a
-linear predictor. The package handles escaping and dealing with formula operators,
-and provides a way to use a custom response function if desired.
+use case is generating SQL to score a GLM or related model represented as an R
+object, in which case the package handles parsing formula operators and
+including the model's response function. The models scored need not be generalized
+linear models, strictly speaking, but their prediction steps must consist of applying
+a response function to a linear predictor. The package handles escaping and dealing
+with formula operators, and provides a way to use a custom response function if desired.
 }
 \section{Function overview}{
 
