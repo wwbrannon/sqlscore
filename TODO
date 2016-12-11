@@ -1,4 +1,6 @@
-o) Write score_expression methods for various packages
 o) documentation and exports
 o) tests
 o) R CMD check etc
+
+o) Write score_expression methods for various packages
+o) add something to complain if there's no coef method

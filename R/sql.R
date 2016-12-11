@@ -23,6 +23,7 @@ function(table, catalog=NULL, schema=NULL)
   
 }
 
+#' @export
 select_statement <-
 function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
          link=NULL)
@@ -54,6 +55,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 # Ideally, we'd use some kind of object-relational mapper to build
 # this statement rather than just munging text, but the ones available
 # for R are underdeveloped. dplyr comes closest but can't quite do this.
+#' @export
 create_statement <-
 function(mod, dest_table, src_table,
          dest_schema=NULL, dest_catalog=NULL, src_schema=NULL,

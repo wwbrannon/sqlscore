@@ -1,3 +1,4 @@
+#' @export
 score_expression <-
 function(mod, link=NULL)
 {
@@ -18,6 +19,7 @@ function(mod, link=NULL)
   UseMethod("score_expression")
 }
 
+#' @export
 score_expression.default <-
 function(mod, link=NULL)
 {

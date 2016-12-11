@@ -1,3 +1,4 @@
+#' @export
 score_expression.glm <-
 function(mod, link=NULL)
 {
@@ -61,6 +62,7 @@ function(mod, link=NULL)
   }
 }
 
+#' @export
 score_expression.lm <-
 function(mod, link=NULL)
 {

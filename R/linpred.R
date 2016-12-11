@@ -1,3 +1,4 @@
+#' @export
 linpred <-
 function(mod)
 {
