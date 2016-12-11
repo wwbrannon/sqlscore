@@ -4,7 +4,9 @@
 # in the model, determine whether the coefficient corresponds to a dummy
 # for a level of one of the factors. If so, return an unevaluated call to
 # ifelse() that is 1 when that factor variable has that value, and 0
-# otherwise. If not, return the name as a symbol.
+# otherwise. If not, return the name as a symbol. (Because it works on
+# dummy variables, this function can only handle models with treatment
+# contrasts for their factors.)
 # 
 # @param name The name to convert.
 # @param factors The list of factor names present in the model.
@@ -65,14 +67,14 @@ linpred <-
 function(mod)
 {
   cf <- extract_coef(mod)
-  fc <- extract_factors(mod)
-  
-  #Handle the intercept term
-  pos <- which(names(cf) == "(Intercept)")
-  if(length(pos) > 0)
+  if(length(names(cf)) != length(unique(names(cf))))
   {
-    names(cf)[pos] <- "1"
+    stop(paste0("Duplicate coefficient names detected; please rename variables ",
+                "so that continuous variables' names do not conflict with the ",
+                "names of factor level dummies"))
   }
+  
+  fc <- extract_factors(mod)
   
   cf <- c(cf, extract_offsets(mod))
   
@@ -80,27 +82,32 @@ function(mod)
   #sql. When dealing with coef, fortunately, we only have to consider
   #the : and I() formula operators and factor expansions.
   exps <- vector("list", length(cf))
-  for(i in seq_along(cf))
+  for(j in seq_along(cf))
   {
-    nm <- names(cf)[i]
+    nm <- names(cf)[j]
+    parts <- as.list(strsplit(nm, ":")[[1]])
     
-    if(substr(nm, 1, 2) == "I(" &&
-       substr(nm, nchar(nm), nchar(nm)) == ")")
+    for(i in seq_along(parts))
     {
-      exp <- parse(text=substr(nm, 3, nchar(nm) - 1))[[1]]
-    } else if(regexpr(":", nm) != -1)
-    {
-      parts <- as.list(strsplit(nm, ":")[[1]])
-      parts <- lapply(parts, function(x) undummy(x, fc))
+      pt <- parts[[i]]
       
-      cmb <- function(x, y) as.call(list(as.symbol("*"), x, y))
-      exp <- Reduce(cmb, parts)
-    } else
-    {
-      exp <- undummy(nm, fc)
+      if(pt == "(Intercept)")
+      {
+        parts[[i]] <- 1.0
+      } else if(substr(pt, 1, 2) == "I(" &&
+                substr(pt, nchar(pt), nchar(pt)) == ")")
+      {
+        parts[[i]] <- parse(text=substr(pt, 3, nchar(pt) - 1))[[1]]
+      } else #it's just a variable name
+      {
+        parts[[i]] <- undummy(pt, fc)
+      }
     }
     
-    exps[[i]] <- as.call(list(as.symbol("*"), exp, unname(cf[i])))
+    cmb <- function(x, y) as.call(list(as.symbol("*"), x, y))
+    exp <- Reduce(cmb, parts)
+
+    exps[[j]] <- as.call(list(as.symbol("*"), exp, unname(cf[j])))
   }
   
   cmb <- function(x, y) as.call(list(as.symbol("+"), x, y))
