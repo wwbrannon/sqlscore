@@ -12,7 +12,7 @@ test_that("Custom links are handled correctly", {
                              ifelse(Species == "virginica", 1, 0) * -3.57030608656997 + 
                              Petal.Width * ifelse(Species == "versicolor", 1, 0) * 4.02643831156467 + 
                              Petal.Width * ifelse(Species == "virginica", 1, 0) * 4.18477992288368))[[1]]
-  expect_equal(score_expression(mod1, response="probit"), res)
+  expect_equal(rec_round(score_expression(mod1, response="probit")), rec_round(res))
 })
 
 test_that("Probit links are handled correctly", {
@@ -33,7 +33,7 @@ test_that("Identity links are handled correctly", {
   res <- expression(1 * 2.17126629215507 + Sepal.Width * 0.495888938388551 + Petal.Length * 0.829243912234806 +
                       Petal.Width * -0.315155173326474 + ifelse(Species =="versicolor", 1, 0) * -0.723561957780729 +
                       ifelse(Species == "virginica", 1, 0) * -1.02349781449083)[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
   
   mod1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
              data=datasets::iris)
@@ -41,7 +41,7 @@ test_that("Identity links are handled correctly", {
                       Petal.Length * 0.829243912234806 + Petal.Width * -0.315155173326474 +
                       ifelse(Species == "versicolor", 1, 0) * -0.723561957780729 +
                       ifelse(Species == "virginica", 1, 0) * -1.02349781449083)[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Logit links are handled correctly", {
@@ -53,7 +53,7 @@ test_that("Logit links are handled correctly", {
                                      ifelse(Species == "virginica", 1, 0) * -7.19944090181685 + 
                                      Petal.Width * ifelse(Species == "versicolor", 1, 0) * 11.7958718975238 + 
                                      Petal.Width * ifelse(Species == "virginica", 1, 0) * 4.99663234765107))))[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Log links are handled correctly", {
@@ -63,7 +63,7 @@ test_that("Log links are handled correctly", {
                         Petal.Length * 0.131548951139663 + Petal.Width * -0.0493444332122325 + 
                         ifelse(Species == "versicolor", 1, 0) * -0.0920150349079109 + 
                         ifelse(Species == "virginica", 1, 0) * -0.140778672241228))[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Inverse links are handled correctly", {
@@ -73,7 +73,7 @@ test_that("Inverse links are handled correctly", {
                        Petal.Length * -0.0202091205105734 + Petal.Width * 0.00681801333299591 + 
                        ifelse(Species == "versicolor", 1, 0) * 0.0102475228494179 + 
                        ifelse(Species == "virginica", 1, 0) * 0.0180539702471309))[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Cloglog links are handled correctly", {
@@ -85,7 +85,7 @@ test_that("Cloglog links are handled correctly", {
                                  ifelse(Species == "virginica", 1, 0) * 4.73243611546338 +
                                  Petal.Width * ifelse(Species == "versicolor", 1, 0) * 9.75613646229436 +
                                  Petal.Width * ifelse(Species == "virginica", 1, 0) * 6.72890398992262)))[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Sqrt links are handled correctly", {
@@ -97,7 +97,7 @@ test_that("Sqrt links are handled correctly", {
                      ifelse(Species == "virginica", 1, 0) * 0.226964083721003 +
                      Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.05410529838605 +
                      Petal.Width * ifelse(Species == "virginica", 1, 0) * 0.0855903045034646)^2)[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("1/mu^2 links are handled correctly", {
@@ -109,7 +109,7 @@ test_that("1/mu^2 links are handled correctly", {
                            ifelse(Species == "virginica", 1, 0) * -0.0172540930025977 +
                            Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.00093527179856655 +
                            Petal.Width * ifelse(Species == "virginica", 1, 0) * 0.00065842246928859))[[1]]
-  expect_equal(score_expression(mod1), res)
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 if("mboost" %in% installed.packages())
@@ -120,11 +120,11 @@ if("mboost" %in% installed.packages())
     res <- expression(1 * 2.47773332391217 + Sepal.Width * 0.536390255877286 +
                         Petal.Length * 0.460907829277574 +
                         ifelse(Species == "virginica", 1, 0) * -0.0192462659183535)[[1]]
-    expect_equal(score_expression(mod1), res)
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
     
     mod2 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
                              data=datasets::iris, family=mboost::Binomial())
-    expect_error(score_expression(mod2))
+    expect_error(rec_round(score_expression(mod2)))
   })
 }
 
@@ -135,20 +135,20 @@ if("glmnet" %in% installed.packages())
                               datasets::iris$Sepal.Length, nfolds=nrow(datasets::iris), grouped=FALSE)
     res <- expression(1 * 2.37744529257366 + Sepal.Width * 0.556167083965938 +
                         Petal.Length * 0.499465780735234 + Petal.Width * -0.0929620855657578)[[1]]
-    expect_equal(score_expression(mod1), res)
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
     
     mod2 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
                               datasets::iris$Sepal.Length > 5.0, nfolds=nrow(datasets::iris), grouped=FALSE,
                               family="binomial")
     res <- expression(1/(1 + exp(-1 * (1 * -9.68828381601703 + Sepal.Width * 2.17597981144076 + 
                                        Petal.Length * 1.47533194385693))))[[1]]
-    expect_equal(score_expression(mod2), res)
+    expect_equal(rec_round(score_expression(mod2)), rec_round(res))
     
     mod3 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
                               round(datasets::iris$Sepal.Length), nfolds=nrow(datasets::iris), grouped=FALSE,
                               family="poisson")
     res <- expression(exp(1 * 1.3340811569889 + Sepal.Width * 0.0525446668415735 + 
                           Petal.Length * 0.0709480580630341))[[1]]
-    expect_equal(score_expression(mod3), res)
+    expect_equal(rec_round(score_expression(mod3)), rec_round(res))
   })
 }
