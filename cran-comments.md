@@ -9,7 +9,7 @@ There were no ERRORs, WARNINGs or NOTEs from local `R CMD check`.
 There was one NOTE from win-builder:
 
 NOTE
-Maintainer: 'William Brannon <will.brannon@gmail.com>'
+Maintainer: 'William Brannon <wwbrannon@email.wm.edu>'
 
 New submission
 
