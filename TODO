@@ -1,8 +1,5 @@
 o) bugfix: logit expressions like -1 * (...) are getting mangled by translate_sql
 o) linpred needs to handle factor expansion and dummies and contrasts
 
-o) add to docs:
-  o) note that standardization (centering, scaling) isn't handled
-  o) discuss model types and packages that work
 o) examples
 o) tests

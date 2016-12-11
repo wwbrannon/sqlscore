@@ -15,7 +15,16 @@
 #' Helper functions include linpred(), which generates an R call object representing
 #' the linear predictor, and score_expression, an S3 generic that handles wrapping
 #' the linear predictor in the response function.
-#'
+#' 
+#' @section Supported models:
+#' Specific packages and models that are known to work include: glm and lm from
+#' package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
+#' and bayesglm from package:arm.
+#' 
+#' Default S3 methods are for objects structured like those of class "glm", so
+#' models not listed here may work if they resemble those objects, but are not 
+#' guaranteed to.
+#' 
 #' @docType package
 #' @name sqlscore
 NULL
@@ -79,7 +88,23 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' their prediction steps must consist of applying a response function to
 #' a linear predictor.
 #' 
-#' @param mod A model object providing a coef() method.
+#' @section Supported packages:
+#' Specific packages and models that are known to work include: glm and lm from
+#' package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
+#' and bayesglm from package:arm.
+#' 
+#' Default S3 methods are for objects structured like those of class "glm", so
+#' models not listed here may work if they resemble those objects, but are not 
+#' guaranteed to.
+#' 
+#' @section Warning:
+#' Note that if the model object transformed its training data before fitting (e.g.,
+#' centering and scaling predictors), the generated SQL statement will not include
+#' those transformations. A future release may include that functionality, but
+#' centering and scaling in particular are difficult to do efficiently and portably
+#' in SQL.
+#' 
+#' @param mod A supported model object.
 #' @param src_table The unqualified DB name of the source table.
 #' @param src_schema The DB schema of the source table.
 #' @param src_catalog The DB catalog of the source table.
@@ -127,7 +152,23 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' their prediction steps must consist of applying a response function to
 #' a linear predictor.
 #' 
-#' @param mod A model object providing a coef() method.
+#' @section Supported packages:
+#' Specific packages and models that are known to work include: glm and lm from
+#' package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
+#' and bayesglm from package:arm.
+#' 
+#' Default S3 methods are for objects structured like those of class "glm", so
+#' models not listed here may work if they resemble those objects, but are not 
+#' guaranteed to.
+#' 
+#' @section Warning:
+#' Note that if the model object transformed its training data before fitting (e.g.,
+#' centering and scaling predictors), the generated SQL statement will not include
+#' those transformations. A future release may include that functionality, but
+#' centering and scaling in particular are difficult to do efficiently and portably
+#' in SQL.
+#' 
+#' @param mod A supported model object.
 #' @param src_table The unqualified DB name of the source table.
 #' @param src_schema The DB schema of the source table.
 #' @param src_catalog The DB catalog of the source table.

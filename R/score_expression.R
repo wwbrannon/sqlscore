@@ -5,7 +5,7 @@
 #' of elementary functions on the underlying column names, and is suitable for
 #' direct translation into SQL.
 #' 
-#' @param mod A model object providing a coef() method.
+#' @param mod A supported model object.
 #' @param response The name of a custom response function to apply to the linear predictor.
 #' 
 #' @return An unevaluated R call object representing the response function of the linear predictor.
