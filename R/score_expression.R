@@ -1,4 +1,17 @@
-#' @export
+#' Unevaluated prediction expressions for models
+#' 
+#' Generate an unevaluated call corresponding to the predict step of the passed
+#' model. The call represents the link function of the linear predictor in terms
+#' of elementary functions on the underlying column names, and is suitable for
+#' direct translation into SQL.
+#' 
+#' @param mod A model object providing a coef() method.
+#' @param link The name of a custom link function to apply to the linear predictor.
+#' 
+#' @return An unevaluated R call object representing the link-inverse function of the linear predictor.
+#' 
+#' @rdname score_expression
+#' @export score_expression
 score_expression <-
 function(mod, link=NULL)
 {
@@ -19,6 +32,10 @@ function(mod, link=NULL)
   UseMethod("score_expression")
 }
 
+#' @return None
+#' 
+#' @rdname score_expression
+#' @method score_expression default
 #' @export
 score_expression.default <-
 function(mod, link=NULL)

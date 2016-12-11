@@ -8,7 +8,7 @@
 #' @param catalog The catalog name.
 #' @param schema The schema name.
 #' 
-#' @returns A dplyr SQL object representing the fully qualified and escaped table name.
+#' @return A dplyr SQL object representing the fully qualified and escaped table name.
 fqtn <-
 function(table, catalog=NULL, schema=NULL)
 {
@@ -48,9 +48,9 @@ function(table, catalog=NULL, schema=NULL)
 #' @param pk A vector of primary key column names.
 #' @param link The name of a custom link function to apply to the linear predictor.
 #' 
-#' @returns A dplyr SQL object representing the SELECT statement.
+#' @return A dplyr SQL object representing the SELECT statement.
 #' 
-#' @export
+#' @export select_statement
 select_statement <-
 function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
          link=NULL)
@@ -99,9 +99,9 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' @param pk A vector of primary key column names.
 #' @param link The name of a custom link function to apply to the linear predictor.
 #' 
-#' @returns A dplyr SQL object representing the SELECT statement.
+#' @return A dplyr SQL object representing the SELECT statement.
 #' 
-#' @export
+#' @export create_statement
 create_statement <-
 function(mod, dest_table, src_table,
          dest_schema=NULL, dest_catalog=NULL, src_schema=NULL,

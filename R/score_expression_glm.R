@@ -1,3 +1,5 @@
+#' @rdname score_expression
+#' @method score_expression glm
 #' @export
 score_expression.glm <-
 function(mod, link=NULL)
@@ -62,6 +64,8 @@ function(mod, link=NULL)
   }
 }
 
+#' @rdname score_expression
+#' @method score_expression lm
 #' @export
 score_expression.lm <-
 function(mod, link=NULL)

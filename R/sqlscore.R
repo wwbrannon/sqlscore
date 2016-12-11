@@ -9,7 +9,7 @@
 #' linear predictor. The package handles escaping and dealing with formula operators,
 #' and provides a way to use a custom link-inverse function if desired.
 #' 
-#' @section Function overview
+#' @section Function overview:
 #' The SQL-generating functions create_statement and select_statement do what their
 #' names suggest and generate CREATE TABLE and SELECT statements for model scoring.
 #' Helper functions include linpred(), which generates an R call object representing

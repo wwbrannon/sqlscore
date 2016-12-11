@@ -1,4 +1,16 @@
-#' @export
+#' Unevaluated prediction expressions for models
+#' 
+#' Generate an unevaluated call corresponding to the predict step of the passed
+#' model. The call represents the linear predictor in terms of elementary functions
+#' on the underlying column names. Before translation into SQL, it should have a link
+#' function applied by score_expression (which may be a no-op in the case of the
+#' identity link).
+#' 
+#' @param mod A model object providing a coef() method.
+#' @return An unevaluated R call object representing the linear predictor.
+#' 
+#' @rdname score_expression
+#' @export linpred
 linpred <-
 function(mod)
 {
