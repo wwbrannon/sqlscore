@@ -25,7 +25,7 @@ score_expression(mod, response = NULL)
 \method{score_expression}{cv.glmnet}(mod, response = NULL)
 }
 \arguments{
-\item{mod}{A model object providing a coef() method.}
+\item{mod}{A supported model object.}
 
 \item{response}{The name of a custom response function to apply to the linear predictor.}
 }

@@ -19,4 +19,16 @@ on the underlying column names. Before translation into SQL, it should have a re
 function applied by score_expression (which may be a no-op in the case of the
 identity response).
 }
+\examples{
+mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris)
+linpred(mod)
+
+x <- matrix(rnorm(100*20),100,20)
+colnames(x) <- sapply(1:20, function(x) paste0("X", as.character(x)))
+x <- as.data.frame(x)
+mod <- glm(X2 ~ X3 + X5 + X15*X8, data=x)
+linpred(mod)
+
+}
 

@@ -24,3 +24,14 @@ the linear predictor, and score_expression, an S3 generic that handles wrapping
 the linear predictor in the response function.
 }
 
+\section{Supported models}{
+
+Specific packages and models that are known to work include: glm and lm from
+package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
+and bayesglm from package:arm.
+
+Default S3 methods are for objects structured like those of class "glm", so
+models not listed here may work if they resemble those objects, but are not 
+guaranteed to.
+}
+
