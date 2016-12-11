@@ -1,5 +1,5 @@
-o) Write score_expression method for glmnet
-o) Write examples
+o) Write methods for glmnet: score_expression, extract_offsets, extract_coef
+o) Write methods for other packages
 
-o) Write score_expression methods for other packages
+o) examples
 o) tests

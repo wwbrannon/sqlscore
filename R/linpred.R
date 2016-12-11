@@ -22,20 +22,7 @@ function(mod)
     names(cf)[pos] <- "1"
   }
   
-  #Handle offsets
-  if("formula" %in% ls(mod))
-  {
-    pos <- attr(terms(mod$formula), "offset")
-    if(!is.null(pos))
-    {
-      for(offset in pos)
-      {
-        args <- list(cf, 1)
-        names(args) <- c("", all.vars(mod$formula)[offset])
-        cf <- do.call(c, args)
-      }
-    }
-  }
+  cf <- c(cf, extract_offsets(mod))
   
   #Translate term names into R expressions and thence to the corresponding
   #sql. When dealing with coef, fortunately, we only have to consider
