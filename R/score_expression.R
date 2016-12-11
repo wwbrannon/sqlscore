@@ -12,7 +12,7 @@
 #' 
 #' @rdname score_expression
 #' 
-#' @examples 
+#' @examples
 #' # A Gaussian GLM including factors
 #' mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
 #'            data=datasets::iris)

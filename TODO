@@ -1,5 +1,4 @@
 o) bugfix: logit expressions like -1 * (...) are getting mangled by translate_sql
 o) linpred needs to handle factor expansion and dummies and contrasts
 
-o) examples
 o) tests

@@ -20,10 +20,17 @@ function applied by score_expression (which may be a no-op in the case of the
 identity response).
 }
 \examples{
+# A Gaussian GLM including factors
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
            data=datasets::iris)
 linpred(mod)
 
+# A binomial GLM - linear predictor is unaffected
+mod <- glm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+           data=datasets::iris, family=binomial("logit"))
+linpred(mod)
+
+#With formula operators
 x <- matrix(rnorm(100*20),100,20)
 colnames(x) <- sapply(1:20, function(x) paste0("X", as.character(x)))
 x <- as.data.frame(x)
