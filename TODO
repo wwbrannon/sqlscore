@@ -1,8 +1,10 @@
-o) linpred needs to handle factor expansion and dummies and contrasts
-  o) what about when a variable starts with the name of a factor but isn't a dumy
+o) linpred factor expansion / dummies / contrasts
+  o) what about when a variable starts with the name of a factor but isn't a dummy
      for one of its levels?
   o) contrasts?
+o) linpred tests
+o) score_expression tests
 
 o) bugfix: logit expressions like -1 * (...) are getting mangled by translate_sql
-
-o) tests
+o) select_statement tests
+o) create_statement tests
