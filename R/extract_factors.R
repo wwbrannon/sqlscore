@@ -20,9 +20,20 @@ extract_factors.default <-
 function(object)
 {
   nm <- attr(stats::terms(object), "dataClasses")
-  factors <- nm[which(nm %in% c("factor", "character"))]
+  factors <- names(nm[which(nm %in% c("factor", "character"))])
   
-  names(factors)
+  # if no contrasts specification, assume all are contr.treatment
+  if("contrasts" %in% names(object))
+  {
+    ct <- unique(sapply(factors, function(x) object$contrasts[[x]]))
+    
+    if(length(ct) > 0 && (length(ct) > 1 || ct != "contr.treatment"))
+    {
+      stop("Only treatment contrasts can be used for SQL generation")
+    }
+  }
+  
+  factors
 }
 
 #' @export

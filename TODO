@@ -1,7 +1,6 @@
 o) linpred factor expansion / dummies / contrasts
   o) what about when a variable starts with the name of a factor but isn't a dummy
      for one of its levels?
-  o) contrasts?
 o) linpred tests
 o) score_expression tests
 

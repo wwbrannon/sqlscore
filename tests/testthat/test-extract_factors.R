@@ -9,6 +9,11 @@ test_that("glm coefficients are extracted correctly", {
   mod2 <- glm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Length + Petal.Width,
               data=datasets::iris, family=binomial("logit"))
   expect_equal(extract_factors(mod2), character(0))
+  
+  mod3 <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+              data=datasets::iris, contrasts=list(Species="contr.poly"))
+  expect_error(extract_factors(mod3))
+  
 })
 
 # Always available because it's in package:stats
