@@ -13,7 +13,7 @@
 linpred <-
 function(mod)
 {
-  cf <- coef(mod)
+  cf <- extract_coef(mod)
   
   #Handle the intercept term
   pos <- which(names(cf) == "(Intercept)")

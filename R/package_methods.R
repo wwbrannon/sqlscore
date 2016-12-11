@@ -11,3 +11,12 @@ function(mod, link=NULL)
   
   NextMethod()
 }
+
+#' @rdname score_expression
+#' @method score_expression cv.glmnet
+#' @export
+score_expression.cv.glmnet <-
+function(mod, link=NULL)
+{
+  #FIXME
+}
