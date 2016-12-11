@@ -4,12 +4,10 @@
 * win-builder (devel and release)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs from local `R CMD check`.
+There were no ERRORs or WARNINGs. There was one NOTE:
 
-There was one NOTE from win-builder:
-
-NOTE
-Maintainer: 'William Brannon <wwbrannon@email.wm.edu>'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘William Brannon <wwbrannon@email.wm.edu>’
 
 New submission
 
