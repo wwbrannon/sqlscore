@@ -56,8 +56,8 @@ test_that("lm objects are handled correctly", {
                     ifelse(Species == "virginica", 1, 0) * -1.02349781449083)[[1]]
   expect_equal(linpred(mod1), res)
   
-  mod2 <- glm(Sepal.Length > 5.1 ~ Sepal.Width + Petal.Length + Petal.Width*Species,
-              data=datasets::iris)
+  mod2 <- lm(Sepal.Length > 5.1 ~ Sepal.Width + Petal.Length + Petal.Width*Species,
+             data=datasets::iris)
   res <- expression(1 * -1.25282405639425 + Sepal.Width * 0.418955303990332 +
                     Petal.Length * 0.0846743947913316 + Petal.Width * -0.110360531989962 +
                     ifelse(Species == "versicolor", 1, 0) * 0.613665953192789 +
