@@ -7,7 +7,7 @@
 linpred(mod)
 }
 \arguments{
-\item{mod}{A model object providing a coef() method.}
+\item{mod}{A supported model object.}
 }
 \value{
 An unevaluated R call object representing the linear predictor.

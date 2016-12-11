@@ -1,4 +1,7 @@
 o) linpred needs to handle factor expansion and dummies and contrasts
+  o) what about when a variable starts with the name of a factor but isn't a dumy
+     for one of its levels?
+  o) contrasts?
 
 o) bugfix: logit expressions like -1 * (...) are getting mangled by translate_sql
 

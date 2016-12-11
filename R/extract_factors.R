@@ -20,8 +20,9 @@ extract_factors.default <-
 function(object)
 {
   nm <- attr(stats::terms(object), "dataClasses")
+  factors <- nm[which(nm %in% c("factor", "character"))]
   
-  nm[which(nm == "factor")]
+  names(factors)
 }
 
 #' @export
@@ -35,7 +36,7 @@ function(object)
     av <- av[2:length(av)] #discard the DV
     
     tp <- sapply(object$model.frame(), is.factor)
-    tp <- tp[which(tp)]
+    tp <- names(tp[which(tp)])
     
     # it's poorly documented whether model.frame() includes
     # only vars used in the fit, so let's be safe
