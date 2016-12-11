@@ -2,104 +2,68 @@ score_expression.glm <-
 function(mod, link=NULL)
 {
   lp <- linpred(mod)
-  fam <- mod$family$family
   lnk <- mod$family$link
   
-  if(fam == "gaussian")
+  # The comments give L(eta), the inverse of the link function,
+  # in clearer notation.
+  if(lnk == "probit")
   {
-    if(lnk == "identity")
-    {
-      
-    } else if(lnk == "inverse")
-    {
-      
-    } else if(lnk == "log")
-    {
-      
-    } else
-    {
-      stop(paste0("Unrecognized link function. Hint: try the link argument ",
-                  "to score_expression to specify the name of a custom or ",
-                  "DB-specific SQL function."))
-    }
-  } else if(fam == "binomial")
+    # L(eta) does not exist in closed form
+    stop(paste0("Link function does not exist in closed form. Consider ",
+                "using the link argument to score_expression to use a ",
+                "custom sql function."))
+  } else if(lnk == "cauchit")
   {
-    if(lnk == "logit")
-    {
-      
-    } else if(lnk == "probit")
-    {
-      
-    } else if(lnk == "cauchit")
-    {
-      
-    } else if(lnk == "log")
-    {
-      
-    } else if(lnk == "cloglog")
-    {
-      
-    } else
-    {
-      stop(paste0("Unrecognized link function. Hint: try the link argument ",
-                  "to score_expression to specify the name of a custom or ",
-                  "DB-specific SQL function."))
-    }
-  } else if(fam == "Gamma")
+    # L(eta) does not exist in closed form
+    stop(paste0("Link function does not exist in closed form. Consider ",
+                "using the link argument to score_expression to use a ",
+                "custom sql function."))
+  } else if(lnk == "identity")
   {
-    if(lnk == "identity")
-    {
-      
-    } else if(lnk == "inverse")
-    {
-      
-    } else if(lnk == "log")
-    {
-      
-    } else
-    {
-      stop(paste0("Unrecognized link function. Hint: try the link argument ",
-                  "to score_expression to specify the name of a custom or ",
-                  "DB-specific SQL function."))
-    }
-  } else if(fam == "poisson")
+    # L(eta) = eta
+    return(lp)
+  } else if(lnk == "log")
   {
-    if(lnk == "identity")
-    {
-      
-    } else if(lnk == "sqrt")
-    {
-      
-    } else if(lnk == "log")
-    {
-      
-    } else
-    {
-      stop(paste0("Unrecognized link function. Hint: try the link argument ",
-                  "to score_expression to specify the name of a custom or ",
-                  "DB-specific SQL function."))
-    }
-  } else if(fam == "inverse.gaussian")
+    # L(eta) = exp(eta)
+    return(as.call(as.symbol("exp"), lp))
+  } else if(lnk == "sqrt")
   {
-    if(lnk == "identity")
-    {
-      
-    } else if(lnk == "inverse")
-    {
-      
-    } else if(lnk == "log")
-    {
-      
-    } else if(lnk == "1/mu^2")
-    {
-      
-    } else
-    {
-      stop(paste0("Unrecognized link function. Hint: try the link argument ",
-                  "to score_expression to specify the name of a custom or ",
-                  "DB-specific SQL function."))
-    }
+    # L(eta) = eta^2
+    return(as.call(as.symbol("^"), lp, 2))
+  } else if(lnk == "1/mu^2")
+  {
+    # L(eta) = 1/sqrt(eta)
+    e1 <- as.call(as.symbol("sqrt"), lp)
+    return(as.call(as.symbol("/"), 1, e1))
+  } else if(lnk == "inverse")
+  {
+    # L(eta) = 1/eta
+    return(as.call(as.symbol("/", 1, lp)))
+  } else if(lnk == "logit")
+  {
+    # L(eta) = 1/(1+exp(-eta))
+    e1 <- as.call(as.symbol("-"), lp)
+    e2 <- as.call(as.symbol("exp"), e1)
+    e3 <- as.call(as.symbol("+", 1, e2))
+    return(as.call(as.symbol("/"), 1, e3))
+  } else if(lnk == "cloglog")
+  {
+    # L(eta) = 1 - exp(-exp(eta))
+    e1 <- as.call(as.symbol("exp"), lp)
+    e2 <- as.call(as.symbol("-"), e1)
+    e3 <- as.call(as.symbol("exp", e2))
+    return(as.call(as.symbol("-", 1, e3)))
+  } else
+  {
+    stop(paste0("Unrecognized link function. Hint: try the link argument ",
+                "to score_expression to specify the name of a custom or ",
+                "DB-specific SQL function."))
   }
-  
-  exp
+}
+
+score_expression.lm <-
+function(mod, link=NULL)
+{
+  #the only possible link function for this object is the identity link
+  return(linpred(mod))
 }
