@@ -9,7 +9,6 @@
 #' @param mod A model object providing a coef() method.
 #' @return An unevaluated R call object representing the linear predictor.
 #' 
-#' @rdname score_expression
 #' @export linpred
 linpred <-
 function(mod)
