@@ -20,6 +20,5 @@ function(object)
 extract_coef.default <-
 function(object)
 {
-  coef(object)
+  stats::coef(object)
 }
-

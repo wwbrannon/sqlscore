@@ -21,14 +21,14 @@ function(object)
 extract_offsets.default <-
 function(object)
 {
-  if("formula" %in% ls(mod))
+  if("formula" %in% ls(object))
   {
-    pos <- attr(terms(mod$formula), "offset")
+    pos <- attr(stats::terms(object$formula), "offset")
     
     if(!is.null(pos))
     {
       ret <- rep(1, length(pos))
-      names(ret) <- all.vars(mod$formula)[pos]
+      names(ret) <- all.vars(object$formula)[pos]
       
       return(ret)
     } else
