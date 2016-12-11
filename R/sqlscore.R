@@ -35,23 +35,34 @@ NULL
 fqtn <-
 function(table, catalog=NULL, schema=NULL, con=NULL)
 {
+  if(is.null(table) || table == "")
+    stop("Bad table name")
+
+  if(!is.null(schema) && schema == "")
+    stop("Bad schema name")
+  
+  if(!is.null(catalog) && catalog == "")
+    stop("Bad catalog name")
+  
+  if(!is.null(catalog) && is.null(schema))
+    stop("Cannot give a catalog name without a schema")
+  
   #This kind of list manipulation in R is inefficient,
   #but for three short character vectors, it doesn't matter.
-  
   dp <- list()
-  if(!is.null(catalog) && catalog != "")
+  if(!is.null(catalog))
   {
-    dp[[length(dp) + 1]] <- dplyr::ident(catalog)
+    dp[[length(dp) + 1]] <- c(dplyr::ident(catalog))
     dp[[length(dp) + 1]] <- "."
   }
   
-  if(!is.null(schema) && schema != "")
+  if(!is.null(schema))
   {
-    dp[[length(dp) + 1]] <- dplyr::ident(schema)
+    dp[[length(dp) + 1]] <- c(dplyr::ident(schema))
     dp[[length(dp) + 1]] <- "."
   }
   
-  dp[[length(dp) + 1]] <- dplyr::ident(table)
+  dp[[length(dp) + 1]] <- c(dplyr::ident(table))
   
   if(!is.null(con))
     dp$con <- con
