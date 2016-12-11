@@ -16,20 +16,25 @@ function(object)
 extract_offsets.default <-
 function(object)
 {
-  if("formula" %in% ls(object))
+  if("formula" %in% names(object))
   {
-    pos <- attr(stats::terms(object$formula), "offset")
+    fm <- object$formula
+  } else if("call" %in% names(object) &&
+            "formula" %in% names(as.list(object$call)))
+  {
+    fm <- as.list(object$call)$formula
+  } else
+  {
+    return(c())
+  }
+  
+  pos <- attr(stats::terms(object), "offset")
+  if(!is.null(pos))
+  {
+    ret <- rep(1, length(pos))
+    names(ret) <- all.vars(fm)[pos]
     
-    if(!is.null(pos))
-    {
-      ret <- rep(1, length(pos))
-      names(ret) <- all.vars(object$formula)[pos]
-      
-      return(ret)
-    } else
-    {
-      return(c())
-    }
+    return(ret)
   } else
   {
     return(c())
