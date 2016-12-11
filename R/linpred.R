@@ -1,8 +1,4 @@
-#TODO
-#Handle link function if any (s3 classes for diff model types?)
-#Other packages: glmnet, bayesglm, bridge, glmboost
-
-linear_predictor <-
+linpred <-
 function(mod)
 {
   cf <- coef(mod)
@@ -46,7 +42,7 @@ function(mod)
       exp <- parse(text=gsub(":", "*", nm))[[1]]
     }
     
-    exps[[i]] <- as.call(list(as.symbol("*"), exp, cf[i]))
+    exps[[i]] <- as.call(list(as.symbol("*"), exp, unname(cf[i])))
   }
   
   cmb <- function(x, y) as.call(list(as.symbol("+"), x, y))
