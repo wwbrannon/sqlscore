@@ -1,5 +1,5 @@
 Package: sqlscore
-Authors@R: c(person("William", "Brannon", email="will.brannon@gmail.com", role=c("aut", "cre")))
+Authors@R: c(person("William", "Brannon", email="wwbrannon@email.wm.edu", role=c("aut", "cre")))
 Version: 0.1.0
 Title: R Utilities for Generating SQL Queries from Model Objects
 Description: The sqlscore package provides utilities for generating SQL queries
