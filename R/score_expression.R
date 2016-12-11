@@ -18,3 +18,10 @@ function(mod, link=NULL)
   UseMethod("score_expression")
 }
 
+score_expression.default <-
+function(mod, link=NULL)
+{
+  stop(paste0("Don't know how to handle object of class ", class(mod),
+              ". Consider using the link argument to score_expression ",
+              "to set the link function by hand."))
+}
