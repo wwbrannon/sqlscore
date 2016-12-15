@@ -1,5 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sqlscore)](http://cran.r-project.org/web/packages/sqlscore) [![Downloads](http://cranlogs.r-pkg.org/badges/sqlscore)](http://cran.rstudio.com/package=sqlscore) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat)](http://badges.mit-license.org)
+
 sqlscore
 ========
 
@@ -7,7 +9,7 @@ R utilities to score GLMs and related models in SQL.
 
 ------------------------------------------------------------------------
 
-The sqlscore package provides utilities for generating sql queries (particularly CREATE TABLE statements) from R model objects. The most important use case is generating SQL to score a GLM or related model represented as an R object, which is particularly when the amount of scoring data is very large. Scoring in the database avoids having to read all of the data into memory (and may also avoid other types of I/O overhead).
+The sqlscore package provides utilities for generating sql queries (particularly CREATE TABLE statements) from R model objects. The most important use case is generating SQL to score a GLM or related model represented as an R object, which is particularly important when the amount of scoring data is very large. Scoring in the database avoids having to read all of the data into memory (and may also avoid other types of I/O overhead).
 
 The SQL-generating functions in sqlscore handle various formula operators, and also take care of wrapping the model's linear predictor in the appropriate link function. If needed, you can also specify a custom link function.
 
@@ -54,7 +56,11 @@ Default S3 methods are for objects structured like those of class "glm", so mode
 Installation:
 -------------
 
-Because sqlscore is not (yet) on CRAN, install from github:
+Install the released version from CRAN:
+
+    install.packages('sqlscore')
+
+Install the dev version from github:
 
     install.packages("devtools")
     devtools::install_github("wwbrannon/sqlscore")
