@@ -35,8 +35,9 @@ knit_hooks$set(output = function(x, options) {
 })
 ```
 
+<!-- [![Build Status](http://img.shields.io/travis/wwbrannon/sqlscore.svg?style=flat)](https://travis-ci.org/wwbrannon/sqlscore) -->
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sqlscore)](http://cran.r-project.org/web/packages/sqlscore)
-[![Downloads](http://cranlogs.r-pkg.org/badges/sqlscore)](http://cran.rstudio.com/package=sqlscore)
+[![Downloads](http://cranlogs.r-pkg.org/badges/sqlscore)](http://cran.r-project.org/package=sqlscore)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat)](http://badges.mit-license.org)
 
 # sqlscore
