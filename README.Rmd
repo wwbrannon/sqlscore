@@ -72,20 +72,20 @@ mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
 create_statement(mod, src_table="iris", dest_table="iris_scores")  
 ```
 
-To get a select statement that's not wrapped in a CREATE TABLE (so that, e.g.,
+To get a SELECT statement that's not wrapped in a CREATE TABLE (so that, e.g.,
 you can add your own database-specific pieces of SQL), use select_statement:
 ```
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
            data=datasets::iris)
 
-create_statement(mod, src_table="iris", dest_table="iris_scores")  
+select_statement(mod, src_table="iris")
 ```
 
 ```{r, echo = FALSE}
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
            data=datasets::iris)
 
-create_statement(mod, src_table="iris", dest_table="iris_scores")  
+select_statement(mod, src_table="iris")
 ```
 
 Helper functions include linpred(), which generates an R call object representing
