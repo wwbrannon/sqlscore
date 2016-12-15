@@ -1,11 +1,6 @@
 language: r
 cache: packages
 
-matrix:
-  - fast_finish: true
-  - allow_failures:
-    - r: devel
-
 r:
 # reenable once oldrel is at least DESCRIPTION's minimum R version
 #  - oldrel
@@ -15,3 +10,8 @@ r:
 os:
   - linux
   - osx
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - r: devel
