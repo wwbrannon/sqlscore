@@ -3,17 +3,10 @@ cache: packages
 sudo: true
 
 r:
-  - oldrel
+#  - oldrel
   - release
   - devel
 
 os:
   - linux
   - osx
-
-r_binary_packages:
-  - multcomp
-  - mboost
-  - arm
-  - glmnet
-  - dplyr
