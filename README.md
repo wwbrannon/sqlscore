@@ -6,11 +6,7 @@
 sqlscore
 ========
 
-R utilities to score GLMs and related models in SQL.
-
-------------------------------------------------------------------------
-
-The sqlscore package provides utilities for generating sql queries (particularly CREATE TABLE statements) from R model objects. The most important use case is generating SQL to score a GLM or related model represented as an R object, which is particularly important when the amount of scoring data is very large. Scoring in the database avoids having to read all of the data into memory (and may also avoid other types of I/O overhead).
+Utilities for scoring GLMs and related models in SQL. Use the create\_statement and select\_statement functions to generate scoring queries from model objects. The most important use case is for very large scoring datasets, especially those which can't fit into memory or would require too much network or storage I/O if scored the usual way in R.
 
 The SQL-generating functions in sqlscore handle various formula operators, and also take care of wrapping the model's linear predictor in the appropriate link function. If needed, you can also specify a custom link function.
 
