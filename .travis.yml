@@ -1,6 +1,13 @@
 language: r
-cache: packages
+
+# using this may be causing builds on oldrel to fail
+#cache: packages
+
 r:
   - oldrel
   - release
   - devel
+
+os:
+  - linux
+  - osx
