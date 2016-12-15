@@ -1,7 +1,5 @@
 language: r
-
-# using this may be causing builds on oldrel to fail
-#cache: packages
+cache: packages
 
 r:
   - oldrel
@@ -11,3 +9,10 @@ r:
 os:
   - linux
   - osx
+
+r_binary_packages:
+  - multcomp
+  - mboost
+  - arm
+  - glmnet
+  - dplyr
