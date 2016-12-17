@@ -158,9 +158,8 @@ if("mboost" %in% installed.packages())
   test_that("Gamma glmboost is handled correctly", {
     mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
                              data=datasets::iris, family=mboost::GammaReg())
-    res <- expression(exp(1 * 4.64697998653701 + Sepal.Width * -1.05076538291393 + 
-                          Petal.Length * 0.0832621228153885 +
-                          ifelse(Species == "versicolor", 1, 0) * 0.0187892235383336))[[1]]
+    res <- expression(exp(1 * 1.38058835534533 + Sepal.Width * 0.0812898508642156 + 
+                          Petal.Length * 0.113692588657378 + Petal.Width * -0.0875146338479956))[[1]]
     expect_equal(rec_round(score_expression(mod1)), rec_round(res))
   })
 }
