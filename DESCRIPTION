@@ -1,6 +1,6 @@
 Package: sqlscore
 Authors@R: c(person("William", "Brannon", email="wwbrannon@email.wm.edu", role=c("aut", "cre")))
-Version: 0.1.0
+Version: 0.1.1
 Title: R Utilities for Generating SQL Queries from Model Objects
 Description: The sqlscore package provides utilities for generating SQL queries
     (particularly CREATE TABLE statements) from R model objects. The most important

@@ -5,6 +5,13 @@
 #' of elementary functions on the underlying column names, and is suitable for
 #' direct translation into SQL.
 #' 
+#' @section Warning:
+#' The Binomial models in glmboost return coefficients which are 1/2 the coefficients
+#' fit by a call to glm(..., family=binomial(...)), because the response variable is
+#' internally recoded to -1 and +1. sqlscore multiplies the returned coefficients by 2
+#' to put them back on the same scale as glm, and adds the glmboost offset to the
+#' intercept before multiplying.
+# 
 #' @param mod A supported model object.
 #' @param response The name of a custom response function to apply to the linear predictor.
 #' 
@@ -86,10 +93,15 @@ function(mod, response=NULL)
                 "custom sql function."))
   } else if(lnk == "cauchit")
   {
-    # L(eta) does not exist in closed form
-    stop(paste0("Response function does not exist in closed form. Consider ",
-                "using the response argument to score_expression to use a ",
-                "custom sql function."))
+    # L(eta) = tan(pi * (eta - 1/2))
+    e0 <- as.call(list(as.symbol("acos"), -1)) # = pi
+    
+    e1 <- as.call(list(as.symbol("("), lp))
+    e2 <- as.call(list(as.symbol("-"), e1, 1/2))
+    e3 <- as.call(list(as.symbol("("), e2))
+    e4 <- as.call(list(as.symbol("*"), e0, e3))
+    
+    return(as.call(list(as.symbol("tan"), e4)))
   } else if(lnk == "identity")
   {
     # L(eta) = eta
@@ -163,9 +175,41 @@ function(mod, response=NULL)
 score_expression.glmboost <-
 function(mod, response=NULL)
 {
-  #mboost's family objects are very hard to work with, so let's
-  #just handle linear regression, where the response is the identity
-  stopifnot(mod$family@name == "Squared Error (Regression)")
+  lp <- linpred(mod)
+  
+  #mboost's family objects are hard to work with, so this is fragile: if mboost
+  #changes its names by even one character, things break
+  if(mod$family@name == "Squared Error (Regression)")
+  {
+    # L(eta) = eta
+    return(lp)
+  } else if(mod$family@name == "Negative Binomial Likelihood") # => logit
+  {
+    # L(eta) = 1/(1+exp(-eta))
+    e1 <- as.call(list(as.symbol("("), lp))
+    e2 <- as.call(list(as.symbol("*"), -1, e1))
+    e3 <- as.call(list(as.symbol("exp"), e2))
+    e4 <- as.call(list(as.symbol("+"), 1, e3))
+    e5 <- as.call(list(as.symbol("("), e4))
+    return(as.call(list(as.symbol("/"), 1, e5)))
+  } else if(mod$family@name == "Negative Binomial Likelihood -- probit Link")
+  {
+    # L(eta) does not exist in closed form
+    stop(paste0("Response function does not exist in closed form. Consider ",
+                "using the response argument to score_expression to use a ",
+                "custom sql function."))
+  } else if(mod$family@name == "Poisson Likelihood")
+  {
+    # L(eta) = exp(eta)
+    return(as.call(list(as.symbol("exp"), lp)))
+  } else if(mod$family@name == "Negative Gamma Likelihood")
+  {
+    # L(eta) = exp(eta)
+    return(as.call(list(as.symbol("exp"), lp)))
+  } else
+  {
+    stop("Unsupported link family ", sQuote(mod$family@name), " for glmboost")
+  }
   
   return(linpred(mod))
 }

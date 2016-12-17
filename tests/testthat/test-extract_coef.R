@@ -49,6 +49,12 @@ if("mboost" %in% installed.packages())
     res <- c(`(Intercept)`=2.47773332391217, Sepal.Width=0.536390255877286,
              Petal.Length=0.460907829277574, Speciesvirginica=-0.01924627)
     expect_equal(extract_coef(mod1), res)
+    
+    mod2 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length +
+                             Petal.Width + Species, data=datasets::iris, family=mboost::Binomial("logit"))
+    res <- c(`(Intercept)`=-7.4408838289516, Sepal.Width=1.39157702713926,
+             Petal.Length=1.1785200271975, Speciesversicolor=0.572890044081493)
+    expect_equal(extract_coef(mod2), res)
   })
 }
 

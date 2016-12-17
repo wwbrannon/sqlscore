@@ -41,6 +41,13 @@ function(name, factors)
 #' function applied by score_expression (which may be a no-op in the case of the
 #' identity response).
 #' 
+#' @section Warning:
+#' The Binomial models in glmboost return coefficients which are 1/2 the coefficients
+#' fit by a call to glm(..., family=binomial(...)), because the response variable is
+#' internally recoded to -1 and +1. sqlscore multiplies the returned coefficients by 2
+#' to put them back on the same scale as glm, and adds the glmboost offset to the
+#' intercept before multiplying.
+# 
 #' @param mod A supported model object.
 #' @return An unevaluated R call object representing the linear predictor.
 #' 

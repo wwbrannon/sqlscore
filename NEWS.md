@@ -1,4 +1,11 @@
-# sqlscore 0.1.0
+## sqlscore 0.1.1
+This version includes:
+
+* Support for cauchit links in glm objects.
+* Support for non-Gaussian families in glmboost, specifically: binomial (logit and probit),
+  Poisson and gamma.
+
+## sqlscore 0.1.0
 First release.
 
 This version includes:
