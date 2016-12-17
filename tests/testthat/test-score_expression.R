@@ -156,7 +156,7 @@ if("mboost" %in% installed.packages())
   })
   
   test_that("Gamma glmboost is handled correctly", {
-    mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+    mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width,
                              data=datasets::iris, family=mboost::GammaReg())
     res <- expression(exp(1 * 1.38058835534533 + Sepal.Width * 0.0812898508642156 + 
                           Petal.Length * 0.113692588657378 + Petal.Width * -0.0875146338479956))[[1]]
