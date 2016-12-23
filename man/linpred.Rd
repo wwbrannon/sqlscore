@@ -19,6 +19,14 @@ on the underlying column names. Before translation into SQL, it should have a re
 function applied by score_expression (which may be a no-op in the case of the
 identity response).
 }
+\section{Warning}{
+
+The Binomial models in glmboost return coefficients which are 1/2 the coefficients
+fit by a call to glm(..., family=binomial(...)), because the response variable is
+internally recoded to -1 and +1. sqlscore multiplies the returned coefficients by 2
+to put them back on the same scale as glm, and adds the glmboost offset to the
+intercept before multiplying.
+}
 \examples{
 # A Gaussian GLM including factors
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,

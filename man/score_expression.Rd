@@ -40,6 +40,14 @@ model. The call represents the response function of the linear predictor in term
 of elementary functions on the underlying column names, and is suitable for
 direct translation into SQL.
 }
+\section{Warning}{
+
+The Binomial models in glmboost return coefficients which are 1/2 the coefficients
+fit by a call to glm(..., family=binomial(...)), because the response variable is
+internally recoded to -1 and +1. sqlscore multiplies the returned coefficients by 2
+to put them back on the same scale as glm, and adds the glmboost offset to the
+intercept before multiplying.
+}
 \examples{
 # A Gaussian GLM including factors
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
