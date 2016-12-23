@@ -24,7 +24,14 @@ test_that("Probit links are handled correctly", {
 test_that("Cauchit links are handled correctly", {
   mod1 <- glm(Sepal.Length > 5.1 ~ Sepal.Width + Petal.Length + Petal.Width*Species,
               data=datasets::iris, family=binomial("cauchit"))
-  expect_error(score_expression(mod1))
+  res <- expression(tan(acos(-1) * ((1 * -51.7049328739396 + Sepal.Width * 10.6921655205083 + 
+                                     Petal.Length * 9.64399725665126 + Petal.Width * -6.46806051573154 + 
+                                     ifelse(Species == "versicolor", 1, 0) * -32.1707363180296 + 
+                                     ifelse(Species == "virginica", 1, 0) * -18.2269989667235 + 
+                                     Petal.Width * ifelse(Species == "versicolor", 1, 0) * 30.8342312084331 + 
+                                     Petal.Width * ifelse(Species == "virginica", 1, 0) * 5.99129500433423) - 
+                                     0.5)))[[1]]
+  expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
 test_that("Identity links are handled correctly", {
@@ -114,17 +121,47 @@ test_that("1/mu^2 links are handled correctly", {
 
 if("mboost" %in% installed.packages())
 {
-  test_that("glmboost is handled correctly", {
+  test_that("Gaussian glmboost is handled correctly", {
     mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
                            data=datasets::iris)
     res <- expression(1 * 2.47773332391217 + Sepal.Width * 0.536390255877286 +
                         Petal.Length * 0.460907829277574 +
                         ifelse(Species == "virginica", 1, 0) * -0.0192462659183535)[[1]]
     expect_equal(rec_round(score_expression(mod1)), rec_round(res))
-    
-    mod2 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
-                             data=datasets::iris, family=mboost::Binomial())
-    expect_error(rec_round(score_expression(mod2)))
+  })
+  
+  test_that("Probit glmboost is handled correctly", {
+    mod1 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+                             data=datasets::iris, family=mboost::Binomial(link="probit"))
+    expect_error(rec_round(score_expression(mod1)))
+  })
+  
+  test_that("Logit glmboost is handled correctly", {
+    mod1 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+                             data=datasets::iris, family=mboost::Binomial("logit"))
+    res <- expression(1/(1 + exp(-1 * (1 * -7.4408838289516 + Sepal.Width * 1.39157702713926 + 
+                                       Petal.Length * 1.1785200271975 +
+                                       ifelse(Species == "versicolor", 1, 0) * 0.572890044081493))))[[1]]
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
+  })
+  
+  test_that("Poisson glmboost is handled correctly", {
+    mod1 <- mboost::glmboost(round(Sepal.Length) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
+                             data=datasets::iris, family=mboost::Poisson())
+    res <- expression(exp(1 * 1.11421046798111 + Sepal.Width * 0.103668069063211 + 
+                          Petal.Length * 0.10231393329097 + Petal.Width * -0.0493784183541429 + 
+                          ifelse(Species == "versicolor", 1, 0) * 0.0268052755047546 + 
+                          ifelse(Species == "virginica", 1, 0) * -0.0137929561950161))[[1]]
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
+  })
+  
+  test_that("Gamma glmboost is handled correctly", {
+    mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Width + I(Petal.Width^2),
+                             data=datasets::iris, family=mboost::GammaReg(),
+                             control=mboost::boost_control(nu=0.01))
+    res <- expression(exp(1 * 1.21648522894789 + Sepal.Width * 0.0953962660259011 + 
+                          Petal.Width * 0.297264297547558 + Petal.Width^2 * -0.0528286797288682))[[1]]
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
   })
 }
 
