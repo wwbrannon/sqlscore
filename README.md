@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://img.shields.io/travis/wwbrannon/sqlscore.svg?style=flat)](https://travis-ci.org/wwbrannon/sqlscore) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sqlscore)](https://cran.r-project.org/package=sqlscore) [![Downloads](https://cranlogs.r-pkg.org/badges/sqlscore)](https://cran.r-project.org/package=sqlscore) [![License](https://img.shields.io/:license-mit-blue.svg?style=flat)](https://badges.mit-license.org)
+[![Build Status](https://img.shields.io/travis/wwbrannon/sqlscore.svg?style=flat)](https://travis-ci.org/wwbrannon/sqlscore) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/sqlscore)](https://cran.r-project.org/package=sqlscore) [![Downloads](https://cranlogs.r-pkg.org/badges/sqlscore)](https://cran.r-project.org/package=sqlscore) [![License](https://img.shields.io/:license-mit-blue.svg?style=flat)](https://wwbrannon.mit-license.org/)
 
 sqlscore
 ========
