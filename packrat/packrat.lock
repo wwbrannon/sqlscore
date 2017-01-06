@@ -5,8 +5,8 @@ Repos: CRAN=https://cran.rstudio.com/
 
 Package: BH
 Source: CRAN
-Version: 1.60.0-2
-Hash: be2967bcff307e561d9ba17faf03205c
+Version: 1.62.0-1
+Hash: 14dfb3e8ffe20996118306ff4de1fab2
 
 Package: DBI
 Source: CRAN
@@ -92,7 +92,7 @@ Hash: fd55d5a024f160fc001a5ece1e27782d
 Package: dplyr
 Source: CRAN
 Version: 0.5.0
-Hash: ed459cc51725bd1cb7b51cd75dd8424a
+Hash: 6f43795330e3b759fc8fac28f4dd6d6b
 Requires: BH, DBI, R6, Rcpp, assertthat, lazyeval, magrittr, tibble
 
 Package: foreach
@@ -224,6 +224,12 @@ Source: CRAN
 Version: 0.6
 Hash: fd256f8bfb9a64cc35f98b0decb1a79f
 
+Package: rversions
+Source: CRAN
+Version: 1.0.3
+Hash: 44837671df6bf1d0b863dc6f83f42a16
+Requires: curl, xml2
+
 Package: sandwich
 Source: CRAN
 Version: 2.3-4
@@ -262,6 +268,12 @@ Package: withr
 Source: CRAN
 Version: 1.0.2
 Hash: 774eb7be9087cdc24b53b74e5359cfac
+
+Package: xml2
+Source: CRAN
+Version: 1.0.0
+Hash: 4d075fef8d3702dab9bc70e2958de697
+Requires: BH, Rcpp
 
 Package: zoo
 Source: CRAN
