@@ -1,5 +1,5 @@
 PackratFormat: 1.4
-PackratVersion: 0.4.7.1
+PackratVersion: 0.4.8.1
 RVersion: 3.3.2
 Repos: CRAN=https://cran.rstudio.com/
 
@@ -10,28 +10,28 @@ Hash: 14dfb3e8ffe20996118306ff4de1fab2
 
 Package: DBI
 Source: CRAN
-Version: 0.4-1
-Hash: 6524d5c5d30ff74084ac028eeb19eb1b
+Version: 0.5-1
+Hash: 375869004db963f9915f2b8a49b4a718
 
 Package: Matrix
 Source: CRAN
-Version: 1.2-6
-Hash: 6d5b4689f994e2af7e9cc11324c5cbeb
+Version: 1.2-7.1
+Hash: 44c7e8fe4ce50a044ec2e5196f6694cc
 
 Package: R6
 Source: CRAN
-Version: 2.1.2
-Hash: c515e41c73294952cbb33ee1c1be5a2d
+Version: 2.2.0
+Hash: 712773a3439bd32db5c40938e1a9aac2
 
 Package: Rcpp
 Source: CRAN
-Version: 0.12.4
-Hash: 115167d29098a4fd1e572fdbef809438
+Version: 0.12.8
+Hash: 436ad5c23fad4e22224c7ac2fc82b049
 
 Package: RcppEigen
 Source: CRAN
-Version: 0.3.2.8.1
-Hash: d33fa8124f9c3a22f39677f43d8b89a5
+Version: 0.3.2.9.0
+Hash: 190c54763f088d4e8684d69ffb56a9c3
 Requires: Matrix, Rcpp
 
 Package: TH.data
@@ -55,6 +55,11 @@ Source: CRAN
 Version: 0.1
 Hash: 0afb92b59b02593c70ff8046700ba9d3
 
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
+
 Package: coda
 Source: CRAN
 Version: 0.19-1
@@ -68,9 +73,8 @@ Requires: modeltools, multcomp, mvtnorm
 
 Package: crayon
 Source: CRAN
-Version: 1.3.1
-Hash: b61d34886cf0f4b4fc4e4f52ea249390
-Requires: memoise
+Version: 1.3.2
+Hash: 576a9d297a567d6a5ebd164ca5221590
 
 Package: curl
 Source: CRAN
@@ -86,13 +90,13 @@ Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
 
 Package: digest
 Source: CRAN
-Version: 0.6.9
-Hash: fd55d5a024f160fc001a5ece1e27782d
+Version: 0.6.11
+Hash: e959a80e637182a39f4f865ef4fc51cc
 
 Package: dplyr
 Source: CRAN
 Version: 0.5.0
-Hash: 6f43795330e3b759fc8fac28f4dd6d6b
+Hash: 3dcd1c1192d66441a627252b535e5cc2
 Requires: BH, DBI, R6, Rcpp, assertthat, lazyeval, magrittr, tibble
 
 Package: foreach
@@ -130,13 +134,13 @@ Hash: 3a193a612cae6814719ed523f7e7cf44
 
 Package: lazyeval
 Source: CRAN
-Version: 0.1.10
-Hash: 9679f1ac7f6bc07bc79755f34cd15e1f
+Version: 0.2.0
+Hash: 3d6e7608e65bbf5cb170dab1e3c9ed8b
 
 Package: lme4
 Source: CRAN
 Version: 1.1-12
-Hash: 0e8b8b1917b817d7b92a7c4230379977
+Hash: 71d6bd20eb374245f7b852e9b4995f22
 Requires: Matrix, Rcpp, RcppEigen, minqa, nloptr
 
 Package: magrittr
@@ -164,7 +168,7 @@ Hash: 463550cf44fb6f0a2359368f42eebe62
 Package: minqa
 Source: CRAN
 Version: 1.2.4
-Hash: 21b10ee94f5a08396365f087d107e0e6
+Hash: 880cf962f1a3a359a733c42de76f3729
 Requires: Rcpp
 
 Package: modeltools
@@ -200,8 +204,8 @@ Hash: 5f4711e142a44655dfea4d64fcf2f641
 
 Package: packrat
 Source: CRAN
-Version: 0.4.7-1
-Hash: 16ca16d36eb18d1d16113606ecc5c400
+Version: 0.4.8-1
+Hash: 6ad605ba7b4b476d84be6632393f5765
 
 Package: party
 Source: CRAN
@@ -218,6 +222,12 @@ Package: quadprog
 Source: CRAN
 Version: 1.5-5
 Hash: 69000b7dc41b09977dcf781f909d235c
+
+Package: roxygen2
+Source: CRAN
+Version: 5.0.1
+Hash: fd554bf7b028b1e8a65f2b9adcafa4f6
+Requires: Rcpp, brew, digest, stringi, stringr
 
 Package: rstudioapi
 Source: CRAN
@@ -241,6 +251,17 @@ Source: CRAN
 Version: 0.5-1
 Hash: 270f26397358606e6237569ffeb78708
 
+Package: stringi
+Source: CRAN
+Version: 1.1.2
+Hash: 1ad6b1cc11d982ac233bf2fa2f7c9684
+
+Package: stringr
+Source: CRAN
+Version: 1.1.0
+Hash: 4d21d0063b37a17ea18eaec6acd29bf3
+Requires: magrittr, stringi
+
 Package: strucchange
 Source: CRAN
 Version: 1.5-1
@@ -256,7 +277,7 @@ Requires: R6, crayon, digest, magrittr, praise
 Package: tibble
 Source: CRAN
 Version: 1.2
-Hash: b7bc409c234d7694572d911e8f5e422b
+Hash: ee28ae66deec042f19aff6fa10f5f8d5
 Requires: Rcpp, assertthat, lazyeval
 
 Package: whisker
@@ -272,7 +293,7 @@ Hash: 774eb7be9087cdc24b53b74e5359cfac
 Package: xml2
 Source: CRAN
 Version: 1.0.0
-Hash: 4d075fef8d3702dab9bc70e2958de697
+Hash: 914754cb4aad4bc09924416cced0bfe7
 Requires: BH, Rcpp
 
 Package: zoo
