@@ -174,17 +174,22 @@ if("glmnet" %in% installed.packages())
                         Petal.Length * 0.499465780735234 + Petal.Width * -0.0929620855657578)[[1]]
     expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 
-    mod2 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
-                              datasets::iris$Sepal.Length > 5.7, nfolds=nrow(datasets::iris), grouped=FALSE,
-                              family="binomial")
-    res <- expression(1/(1 + exp(-1 * (1 * -4.09684016693464 + Petal.Length * 1.07427968884118))))[[1]]
-    expect_equal(rec_round(score_expression(mod2)), rec_round(res))
+    #Non-Gaussian glmnet is broken on Solaris - doesn't even run its own
+    #examples correctly in the CRAN checks
+    if(Sys.info()['sysname'] != 'SunOS')
+    {
+        mod2 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Width")]),
+                                  datasets::iris$Sepal.Length > 5.7, nfolds=nrow(datasets::iris), grouped=FALSE,
+                                  family="binomial")
+        res <- expression(1/(1 + exp(-1 * (1 * -2.44224306532646 + Petal.Width * 2.0713534388326))))[[1]]
+        expect_equal(rec_round(score_expression(mod2)), rec_round(res))
 
-    mod3 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
-                              round(datasets::iris$Sepal.Length), nfolds=nrow(datasets::iris), grouped=FALSE,
-                              family="poisson")
-    res <- expression(exp(1 * 1.3340811569889 + Sepal.Width * 0.0525446668415735 +
-                          Petal.Length * 0.0709480580630341))[[1]]
-    expect_equal(rec_round(score_expression(mod3)), rec_round(res))
+        mod3 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
+                                  round(datasets::iris$Sepal.Length), nfolds=nrow(datasets::iris), grouped=FALSE,
+                                  family="poisson")
+        res <- expression(exp(1 * 1.3340811569889 + Sepal.Width * 0.0525446668415735 +
+                                  Petal.Length * 0.0709480580630341))[[1]]
+        expect_equal(rec_round(score_expression(mod3)), rec_round(res))
+    }
   })
 }
