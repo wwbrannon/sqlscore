@@ -1,7 +1,8 @@
 ## Test environments
-* ubuntu 12.04.5 LTS (R-release) via travis-ci
+* ubuntu 12.04.5 LTS (R-release and R-devel) via travis-ci
 * Mac OSX 10.11 (R-release) via travis-ci
-* win-builder (R-devel and R-release)
+* Solaris 11 (R-release) via VirtualBox
+* win-builder (R-release)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. There was one NOTE:
