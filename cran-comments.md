@@ -1,3 +1,5 @@
+Resubmission: corrected the Title field in DESCRIPTION
+
 ## Test environments
 * ubuntu 12.04.5 LTS (R-release and R-devel) via travis-ci
 * Mac OSX 10.11 (R-release) via travis-ci
