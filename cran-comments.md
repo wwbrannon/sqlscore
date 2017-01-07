@@ -1,4 +1,4 @@
-Resubmission: corrected the Title field in DESCRIPTION
+Resubmission: corrected the Description field in DESCRIPTION
 
 ## Test environments
 * ubuntu 12.04.5 LTS (R-release and R-devel) via travis-ci
