@@ -62,7 +62,7 @@ sepal length and generate predictions as follows:
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
            data=datasets::iris)
 
-create_statement(mod, src_table="iris", dest_table="iris_scores")  
+create_statement(mod, src_table="iris", dest_table="iris_scores", pk=c("id"))
 ```
 
 ```{r, echo = FALSE}
@@ -78,7 +78,7 @@ you can add your own database-specific pieces of SQL), use select_statement:
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
            data=datasets::iris)
 
-select_statement(mod, src_table="iris")
+select_statement(mod, src_table="iris", pk=c("id"))
 ```
 
 ```{r, echo = FALSE}
