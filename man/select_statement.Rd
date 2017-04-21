@@ -23,7 +23,7 @@ select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
 \item{con}{An optional DBI connection to control the details of SQL generation.}
 }
 \value{
-A dplyr SQL object representing the SELECT statement.
+A dplyr/dbplyr SQL object representing the SELECT statement.
 }
 \description{
 Generate a SELECT statement to score the passed model on a preexisting
