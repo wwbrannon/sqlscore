@@ -2,8 +2,7 @@ language: r
 cache: packages
 
 r:
-# reenable once oldrel is at least DESCRIPTION's minimum R version
-#  - oldrel
+  - oldrel
   - release
   - devel
 
