@@ -1,7 +1,7 @@
 language: r
 cache: packages
 
-before_install:
+before_script:
   - sudo R --vanilla -e 'install.packages("devtools")'
   - sudo R --vanilla -e 'devtools::install_github("hadley/dbplyr")'
 
