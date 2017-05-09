@@ -2,8 +2,7 @@ language: r
 cache: packages
 
 before_script:
-  - sudo R --vanilla -e 'install.packages("devtools")'
-  - sudo R --vanilla -e 'devtools::install_github("hadley/dbplyr")'
+  - Rscript -e 'devtools::install_github("hadley/dbplyr"); if (!all(c("dbplyr") %in% installed.packages())) { q(status = 1, save = "no")}'
 
 r:
   - oldrel
