@@ -45,8 +45,6 @@ NULL
 fqtn <-
 function(table, catalog=NULL, schema=NULL, con=NULL)
 {
-  ident <- get_ident()
-  sql <- get_sql()
   build_sql <- get_build_sql()
 
   if(is.null(table) || table == "")
@@ -66,17 +64,17 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
   dp <- list()
   if(!is.null(catalog))
   {
-    dp[[length(dp) + 1]] <- c(ident(catalog))
+    dp[[length(dp) + 1]] <- c(sql_escape_ident(catalog))
     dp[[length(dp) + 1]] <- "."
   }
 
   if(!is.null(schema))
   {
-    dp[[length(dp) + 1]] <- c(ident(schema))
+    dp[[length(dp) + 1]] <- c(sql_escape_ident(schema))
     dp[[length(dp) + 1]] <- "."
   }
 
-  dp[[length(dp) + 1]] <- c(ident(table))
+  dp[[length(dp) + 1]] <- c(sql_escape_ident(table))
 
   if(!is.null(con))
     dp$con <- con
