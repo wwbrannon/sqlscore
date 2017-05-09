@@ -1,6 +1,10 @@
 language: r
 cache: packages
 
+before_install:
+  - sudo R --vanilla -e 'install.packages("devtools")'
+  - sudo R --vanilla -e 'devtools::install_github("hadley/dbplyr")'
+
 r:
   - oldrel
   - release
@@ -16,6 +20,6 @@ matrix:
     - r: devel
 
 branches:
-  only: 
+  only:
       - master
 
