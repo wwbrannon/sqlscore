@@ -3,38 +3,67 @@
 # calls the corresponding function in the appropriate d(b)plyr package.
 # See http://dplyr.tidyverse.org/articles/compatibility.html
 
-ident <-
-function(obj_name)
+get_sql <-
+function()
 {
-    if (utils::packageVersion("dplyr") > "0.5.0") {
+    if (utils::packageVersion("dplyr") > "0.5.0")
+    {
         dplyr::check_dbplyr()
-        dbplyr::ident(obj_name = obj_name)
+        fn <- dbplyr::sql
     }
-    else {
-        dplyr::ident(obj_name = obj_name)
+    else
+    {
+        fn <- dplyr::sql
     }
+
+    fn
 }
 
-build_sql <-
-function(obj_name)
+
+get_ident <-
+function()
 {
-    if (utils::packageVersion("dplyr") > "0.5.0") {
+    if (utils::packageVersion("dplyr") > "0.5.0")
+    {
         dplyr::check_dbplyr()
-        dbplyr::build_sql(obj_name = obj_name)
+        fn <- dbplyr::ident
     }
-    else {
-        dplyr::build_sql(obj_name = obj_name)
+    else
+    {
+        fn <- dplyr::ident
     }
+
+    fn
 }
 
-translate_sql <-
-function(obj_name)
+get_build_sql <-
+function()
 {
-    if (utils::packageVersion("dplyr") > "0.5.0") {
+    if (utils::packageVersion("dplyr") > "0.5.0")
+    {
         dplyr::check_dbplyr()
-        dbplyr::translate_sql(obj_name = obj_name)
+        fn <- dbplyr::build_sql
     }
-    else {
-        dplyr::translate_sql(obj_name = obj_name)
+    else
+    {
+        fn <- dplyr::build_sql
     }
+
+    fn
+}
+
+get_translate_sql <-
+function()
+{
+    if (utils::packageVersion("dplyr") > "0.5.0")
+    {
+        dplyr::check_dbplyr()
+        fn <- dbplyr::translate_sql
+    }
+    else
+    {
+        fn <- dplyr::translate_sql
+    }
+
+    fn
 }

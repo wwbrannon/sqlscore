@@ -2,12 +2,12 @@
 % Please edit documentation in R/score_expression.R
 \name{score_expression}
 \alias{score_expression}
-\alias{score_expression.bayesglm}
-\alias{score_expression.cv.glmnet}
 \alias{score_expression.default}
 \alias{score_expression.glm}
-\alias{score_expression.glmboost}
 \alias{score_expression.lm}
+\alias{score_expression.bayesglm}
+\alias{score_expression.glmboost}
+\alias{score_expression.cv.glmnet}
 \title{Unevaluated prediction expressions for models}
 \usage{
 score_expression(mod, response = NULL)
@@ -48,6 +48,7 @@ internally recoded to -1 and +1. sqlscore multiplies the returned coefficients b
 to put them back on the same scale as glm, and adds the glmboost offset to the
 intercept before multiplying.
 }
+
 \examples{
 # A Gaussian GLM including factors
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
@@ -70,4 +71,3 @@ mod <- glm(X2 ~ X3 + X5 + X15*X8, data=x)
 score_expression(mod)
 
 }
-

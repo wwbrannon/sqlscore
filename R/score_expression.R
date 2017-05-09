@@ -1,45 +1,45 @@
 #' Unevaluated prediction expressions for models
-#' 
+#'
 #' Generate an unevaluated call corresponding to the predict step of the passed
 #' model. The call represents the response function of the linear predictor in terms
 #' of elementary functions on the underlying column names, and is suitable for
 #' direct translation into SQL.
-#' 
+#'
 #' @section Warning:
 #' The Binomial models in glmboost return coefficients which are 1/2 the coefficients
 #' fit by a call to glm(..., family=binomial(...)), because the response variable is
 #' internally recoded to -1 and +1. sqlscore multiplies the returned coefficients by 2
 #' to put them back on the same scale as glm, and adds the glmboost offset to the
 #' intercept before multiplying.
-# 
+#
 #' @param mod A supported model object.
 #' @param response The name of a custom response function to apply to the linear predictor.
-#' 
+#'
 #' @return An unevaluated R call object representing the response function of the linear predictor.
-#' 
+#'
 #' @rdname score_expression
-#' 
+#'
 #' @examples
 #' # A Gaussian GLM including factors
 #' mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
 #'            data=datasets::iris)
 #' score_expression(mod)
-#' 
+#'
 #' # A binomial GLM - linear predictor is unaffected
 #' mod <- glm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Length + Petal.Width + Species,
 #'            data=datasets::iris, family=binomial("logit"))
 #' score_expression(mod)
-#' 
+#'
 #' #With a hand-specified response function
 #' score_expression(mod, response="probit")
-#' 
+#'
 #' #With formula operators
 #' x <- matrix(rnorm(100*20),100,20)
 #' colnames(x) <- sapply(1:20, function(x) paste0("X", as.character(x)))
 #' x <- as.data.frame(x)
 #' mod <- glm(X2 ~ X3 + X5 + X15*X8, data=x)
 #' score_expression(mod)
-#' 
+#'
 #' @export
 score_expression <-
 function(mod, response=NULL)
@@ -54,7 +54,7 @@ function(mod, response=NULL)
     lp <- linpred(mod)
     return(as.call(list(as.symbol(response), lp)))
   }
-  
+
   #Otherwise, let's figure out what the response should be. If it
   #should be something we can't generate in closed form, stop
   #and suggest using a sql function and the response argument.
@@ -62,7 +62,7 @@ function(mod, response=NULL)
 }
 
 #' @return None
-#' 
+#'
 #' @rdname score_expression
 #' @method score_expression default
 #' @export
@@ -82,7 +82,7 @@ function(mod, response=NULL)
 {
   lp <- linpred(mod)
   lnk <- mod$family$link
-  
+
   # The comments give L(eta), the response / inverse of the link function,
   # in clearer notation.
   if(lnk == "probit")
@@ -95,12 +95,12 @@ function(mod, response=NULL)
   {
     # L(eta) = tan(pi * (eta - 1/2))
     e0 <- as.call(list(as.symbol("acos"), -1)) # = pi
-    
+
     e1 <- as.call(list(as.symbol("("), lp))
     e2 <- as.call(list(as.symbol("-"), e1, 1/2))
     e3 <- as.call(list(as.symbol("("), e2))
     e4 <- as.call(list(as.symbol("*"), e0, e3))
-    
+
     return(as.call(list(as.symbol("tan"), e4)))
   } else if(lnk == "identity")
   {
@@ -165,7 +165,7 @@ function(mod, response=NULL)
 {
   #These are also GLM objects; the fit is regularized but the
   #prediction step is the same
-  
+
   NextMethod()
 }
 
@@ -176,14 +176,16 @@ score_expression.glmboost <-
 function(mod, response=NULL)
 {
   lp <- linpred(mod)
-  
+
+  #FIXME mboost names
+
   #mboost's family objects are hard to work with, so this is fragile: if mboost
   #changes its names by even one character, things break
   if(mod$family@name == "Squared Error (Regression)")
   {
     # L(eta) = eta
     return(lp)
-  } else if(mod$family@name == "Negative Binomial Likelihood") # => logit
+  } else if(mod$family@name == "Binomial Distribution (similar to glm)") # => logit
   {
     # L(eta) = 1/(1+exp(-eta))
     e1 <- as.call(list(as.symbol("("), lp))
@@ -210,7 +212,7 @@ function(mod, response=NULL)
   {
     stop("Unsupported link family ", sQuote(mod$family@name), " for glmboost")
   }
-  
+
   return(linpred(mod))
 }
 
@@ -222,7 +224,7 @@ function(mod, response=NULL)
 {
   lp <- linpred(mod)
   cls <- setdiff(class(mod$glmnet.fit), c("glmnet"))
-  
+
   if(cls == "elnet") # family = gaussian
   {
     # L(eta) = eta
