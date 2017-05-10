@@ -132,20 +132,19 @@ if("mboost" %in% installed.packages())
 
   test_that("Probit glmboost is handled correctly", {
     mod1 <- mboost::glmboost(as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length + Petal.Width + Species,
-                             data=datasets::iris, family=mboost::Binomial(link="probit"))
+                             data=datasets::iris, family=mboost::Binomial(type="glm", link="probit"))
     expect_error(rec_round(score_expression(mod1)))
   })
 
   test_that("Logit glmboost is handled correctly", {
-    #FIXME
-    #form <- as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length +
-    #                                        Petal.Width + Species
-    #mod1 <- mboost::glmboost(form, data=datasets::iris,
-    #                         family=mboost::Binomial(type="glm", link="logit"))
-    #res <- expression(1/(1 + exp(-1 * (1 * -7.4408838289516 + Sepal.Width * 1.39157702713926 +
-    #                                   Petal.Length * 1.1785200271975 +
-    #                                   ifelse(Species == "versicolor", 1, 0) * 0.572890044081493))))[[1]]
-    #expect_equal(rec_round(score_expression(mod1)), rec_round(res))
+    form <- as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length +
+                                            Petal.Width + Species
+    mod1 <- mboost::glmboost(form, data=datasets::iris,
+                             family=mboost::Binomial(type="glm", link="logit"))
+    res <- expression(1/(1 + exp(-1 * (1 * -7.4408838289516 + Sepal.Width * 1.39157702713926 +
+                                       Petal.Length * 1.1785200271975 +
+                                       ifelse(Species == "versicolor", 1, 0) * 0.572890044081493))))[[1]]
+    expect_equal(rec_round(score_expression(mod1)), rec_round(res))
   })
 
   test_that("Poisson glmboost is handled correctly", {
