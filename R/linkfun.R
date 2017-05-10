@@ -167,6 +167,7 @@ function(obj)
                     "custom sql function."))
     } else if(lnk == "cauchit")
     {
+        # L(eta) = tan(pi * (eta - 1/2))
         fn <- link_cauchit
     } else if(lnk == "identity")
     {
@@ -232,17 +233,6 @@ function(obj)
         # L(eta) = eta
         lnk <- "identity"
         fn <- link_identity
-    } else if(obj$family@name == "Binomial Distribution (similar to glm)") # => logit
-    {
-        # L(eta) = 1/(1+exp(-eta))
-        lnk <- "logit"
-        fn <- link_logit
-    } else if(obj$family@name == "Negative Binomial Likelihood -- probit Link")
-    {
-        # L(eta) does not exist in closed form
-        stop(paste0("Response function does not exist in closed form. Consider ",
-                    "using the response argument to score_expression to use a ",
-                    "custom sql function."))
     } else if(obj$family@name == "Poisson Likelihood")
     {
         # L(eta) = exp(eta)
@@ -253,6 +243,65 @@ function(obj)
         # L(eta) = exp(eta)
         lnk <- 'log'
         fn <- link_log
+    } else if(obj$family@name == "Negative Binomial Likelihood -- probit Link")
+    {
+        # L(eta) does not exist in closed form
+        stop(paste0("Response function does not exist in closed form. Consider ",
+                    "using the response argument to score_expression to use a ",
+                    "custom sql function."))
+    } else if(obj$family@name == "Negative Binomial Likelihood (logit link)")
+    {
+        # L(eta) = 1/(1+exp(-eta))
+        lnk <- "logit"
+        fn <- link_logit
+    }  else if(obj$family@name == "Negative Binomial Likelihood -- logit link")
+    {
+        # L(eta) = 1/(1+exp(-eta))
+        lnk <- "logit"
+        fn <- link_logit
+    }  else if(obj$family@name == "Negative Binomial Likelihood -- cloglog link")
+    {
+        # L(eta) = 1 - exp(-exp(eta))
+        lnk <- "cloglog"
+        fn <- link_cloglog
+    }  else if(obj$family@name == "Negative Binomial Likelihood -- cauchit link")
+    {
+        # L(eta) = tan(pi * (eta - 1/2))
+        lnk <- "cauchit"
+        fn <- link_cauchit
+    }  else if(obj$family@name == "Negative Binomial Likelihood -- log link")
+    {
+        # L(eta) = exp(eta)
+        lnk <- "log"
+        fn <- link_log
+    } else if(obj$family@name == "Binomial Distribution (similar to glm)") # => logit
+    {
+        # This is especially fragile, but...
+        lnk <- get("link", envir=environment(obj$family@response))$name
+
+        if(lnk == "probit")
+        {
+            # L(eta) does not exist in closed form
+            stop(paste0("Response function does not exist in closed form. Consider ",
+                        "using the response argument to score_expression to use a ",
+                        "custom sql function."))
+        } else if(lnk == "logit")
+        {
+            # L(eta) = 1/(1+exp(-eta))
+            fn <- link_logit
+        } else if(lnk == "log")
+        {
+            # L(eta) = exp(eta)
+            fn <- link_log
+        } else if(lnk == "cauchit")
+        {
+            # L(eta) = tan(pi * (eta - 1/2))
+            fn <- link_cauchit
+        } else if(lnk == "cloglog")
+        {
+            # L(eta) = 1 - exp(-exp(eta))
+            fn <- link_cloglog
+        }
     } else
     {
         stop("Unsupported link family ", sQuote(obj$family@name), " for glmboost")
