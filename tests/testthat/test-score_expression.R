@@ -137,13 +137,13 @@ if("mboost" %in% installed.packages())
   })
 
   test_that("Logit glmboost is handled correctly", {
-    form <- as.factor(Sepal.Length > 5.1) ~ Sepal.Width + Petal.Length +
+    form <- as.factor(Sepal.Length > 6.1) ~ Sepal.Width + Petal.Length +
                                             Petal.Width + Species
     mod1 <- mboost::glmboost(form, data=datasets::iris,
                              family=mboost::Binomial(type="glm", link="logit"))
-    res <- expression(1/(1 + exp(-1 * (1 * -7.4408838289516 + Sepal.Width * 1.39157702713926 +
-                                       Petal.Length * 1.1785200271975 +
-                                       ifelse(Species == "versicolor", 1, 0) * 0.572890044081493))))[[1]]
+    res <- expression(1/(1 + exp(-1 * (1 * -3.022405000021751 + Petal.Length * 0.598218836395547 +
+                                       Petal.Width * 0.251758555635825 +
+                                       ifelse(Species == "virginica", 1, 0) * 0.315911329209358))))[[1]]
     expect_equal(rec_round(score_expression(mod1)), rec_round(res))
   })
 
