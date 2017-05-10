@@ -1,3 +1,10 @@
+# The response function for the cloglog link
+#
+# Return the passed expression x wrapped in the cloglog response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_cloglog <-
 function(x)
 {
@@ -9,6 +16,13 @@ function(x)
     e4
 }
 
+# The response function for the logit link
+#
+# Return the passed expression x wrapped in the logit response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_logit <-
 function(x)
 {
@@ -22,13 +36,26 @@ function(x)
     e6
 }
 
-# this is an unfortunate name
+# The response function for the inverse link
+#
+# Return the passed expression x wrapped in the inverse response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_inverse <-
 function(x)
 {
     return(as.call(list(as.symbol("/"), 1, x)))
 }
 
+# The response function for the 1/mu^2 link
+#
+# Return the passed expression x wrapped in the 1/mu^2 response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_sqrteta <-
 function(x)
 {
@@ -38,24 +65,52 @@ function(x)
     e2
 }
 
+# The response function for the sqrt link
+#
+# Return the passed expression x wrapped in the sqrt response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_sqrt <-
 function(x)
 {
     return(as.call(list(as.symbol("^"), x, 2)))
 }
 
+# The response function for the identity link
+#
+# Return the passed expression x wrapped in the identity response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_identity <-
 function(x)
 {
     x
 }
 
+# The response function for the log link
+#
+# Return the passed expression x wrapped in the log response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_log <-
 function(x)
 {
     return(as.call(list(as.symbol("exp"), x)))
 }
 
+# The response function for the cauchit link
+#
+# Return the passed expression x wrapped in the cauchit response.
+#
+# @param x An expression to apply the response function to
+#
+# @return The wrapped expression
 link_cauchit <-
 function(x)
 {
@@ -71,14 +126,22 @@ function(x)
     e5
 }
 
-#' @export
+# Get the link function for a model object
+#
+# Return a function which takes an expression and wraps it in the link function
+# (in the mathematical sense of "function") of the passed model object. For
+# example, the returned R function for a model with a log link would take x and
+# return exp(x).
+#
+# @param obj The object whose link function to use.
+#
+# @return The link-wrapping function for the passed model.
 linkfun <-
 function(obj)
 {
     UseMethod("linkfun")
 }
 
-#' @method linkfun default
 #' @export
 linkfun.default <-
 function(obj)
@@ -88,7 +151,6 @@ function(obj)
                 "DB-specific SQL function."))
 }
 
-#' @method linkfun glm
 #' @export
 linkfun.glm <-
 function(obj)
@@ -142,7 +204,6 @@ function(obj)
     return(structure(fn, link=lnk))
 }
 
-#' @method linkfun lm
 #' @export
 linkfun.lm <-
 function(obj)
@@ -150,7 +211,6 @@ function(obj)
     return(structure(link_identity, link="identity"))
 }
 
-#' @method linkfun bayesglm
 #' @export
 linkfun.bayesglm <-
 function(obj)
@@ -161,7 +221,6 @@ function(obj)
     NextMethod()
 }
 
-#' @method linkfun glmboost
 #' @export
 linkfun.glmboost <-
 function(obj)
@@ -202,7 +261,6 @@ function(obj)
     return(structure(fn, link=lnk))
 }
 
-#' @method linkfun cv.glmnet
 #' @export
 linkfun.cv.glmnet <-
 function(obj)
