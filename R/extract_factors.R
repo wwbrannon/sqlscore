@@ -1,13 +1,13 @@
 # Standardized factor extraction
-# 
+#
 # Extract factor variables expanded by a model object's constructor
 #
 # Extract the names of factor variables passed to a model's constructor, and return
 # them as a character vector. This is useful for linpred() in identifying expanded
 # dummies so that they can be turned into CASE expressions.
-# 
+#
 # @param object An object for which the extraction of input factors is meaningful.
-# 
+#
 # @return Names of model input factors as a character vector.
 extract_factors <-
 function(object)
@@ -21,18 +21,18 @@ function(object)
 {
   nm <- attr(stats::terms(object), "dataClasses")
   factors <- names(nm[which(nm %in% c("factor", "character"))])
-  
+
   # if no contrasts specification, assume all are contr.treatment
   if("contrasts" %in% names(object))
   {
     ct <- unique(sapply(factors, function(x) object$contrasts[[x]]))
-    
+
     if(length(ct) > 0 && (length(ct) > 1 || ct != "contr.treatment"))
     {
       stop("Only treatment contrasts can be used for SQL generation")
     }
   }
-  
+
   factors
 }
 
@@ -43,12 +43,14 @@ function(object)
   cl <- as.list(object$call)
   if("formula" %in% names(cl))
   {
-    av <- all.vars(cl$formula)
-    av <- av[2:length(av)] #discard the DV
-    
+    dc <- attr(attr(object$model.frame(), 'terms', exact=TRUE),
+               'dataClasses', exact=TRUE)
+    av <- names(which(dc == "factor"))
+    av <- av[2:length(av)]
+
     tp <- sapply(object$model.frame(), is.factor)
     tp <- names(tp[which(tp)])
-    
+
     # it's poorly documented whether model.frame() includes
     # only vars used in the fit, so let's be safe
     return(intersect(tp, av))
