@@ -1,3 +1,9 @@
+## sqlscore 0.1.2
+This version includes:
+
+* Support for either dplyr <= 0.5.0, or the new dplyr >= 0.6.0 via dbplyr.
+* Support for the new Binomial_glm type of object in mboost.
+
 ## sqlscore 0.1.1
 This version includes:
 

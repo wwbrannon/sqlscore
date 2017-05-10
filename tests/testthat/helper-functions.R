@@ -1,5 +1,22 @@
 ## Helper functions for package tests
 
+# A wrapper around dplyr 0.6.0's move of this function to dbplyr
+get_sql <-
+function()
+{
+    if (utils::packageVersion("dplyr") > "0.5.0")
+    {
+        dplyr::check_dbplyr()
+        fn <- dbplyr::sql
+    }
+    else
+    {
+        fn <- dplyr::sql
+    }
+
+    fn
+}
+
 # Recursively round an object's numeric components
 #
 # Take an object and return it with numeric components rounded to a some
@@ -11,7 +28,7 @@
 #
 # @param x The object to recursively round.
 # @param digits The number of digits numeric components of x should be rounded to.
-# 
+#
 # @return The passed object x with numeric components rounded.
 rec_round <-
 function(x, digits=8)

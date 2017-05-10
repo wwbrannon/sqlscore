@@ -23,7 +23,7 @@ select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
 \item{con}{An optional DBI connection to control the details of SQL generation.}
 }
 \value{
-A dplyr SQL object representing the SELECT statement.
+A dplyr/dbplyr SQL object representing the SELECT statement.
 }
 \description{
 Generate a SELECT statement to score the passed model on a preexisting
@@ -39,7 +39,7 @@ package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
 and bayesglm from package:arm.
 
 Default S3 methods are for objects structured like those of class "glm", so
-models not listed here may work if they resemble those objects, but are not 
+models not listed here may work if they resemble those objects, but are not
 guaranteed to.
 }
 
@@ -51,6 +51,7 @@ those transformations. A future release may include that functionality, but
 centering and scaling in particular are difficult to do efficiently and portably
 in SQL.
 }
+
 \examples{
 # Basic select statements
 mod <- glm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
@@ -79,4 +80,3 @@ select_statement(mod, src_table="tbl_name")
 select_statement(mod, src_table="tbl_name", response="cauchit")
 
 }
-

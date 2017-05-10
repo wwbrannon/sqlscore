@@ -31,13 +31,12 @@ test_that("table names are included", {
   expect_match(cs, dest, fixed=TRUE)
 })
 
-
 test_that("DROP TABLE is generated", {
   cs <- create_statement(mod, src_table=src_tbl, src_schema=src_schema,
                          src_catalog=src_catalog, dest_table=dest_tbl,
                          dest_schema=dest_schema, dest_catalog=dest_catalog,
                          pk=pk, drop=TRUE)
-  
+
   expect_match(cs, "DROP TABLE IF EXISTS", fixed=TRUE)
 })
 
@@ -46,7 +45,7 @@ test_that("TEMPORARY is generated", {
                          src_catalog=src_catalog, dest_table=dest_tbl,
                          dest_schema=dest_schema, dest_catalog=dest_catalog,
                          pk=pk, temporary=TRUE)
-  
+
   expect_match(cs, "TEMPORARY", fixed=TRUE)
 })
 
@@ -55,7 +54,7 @@ test_that("pk columns are included", {
                          src_catalog=src_catalog, dest_table=dest_tbl,
                          dest_schema=dest_schema, dest_catalog=dest_catalog,
                          pk=pk, temporary=TRUE)
-  
+
   for(p in pk)
   {
     expect_match(cs, p, fixed=TRUE)
