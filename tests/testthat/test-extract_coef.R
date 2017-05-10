@@ -54,11 +54,22 @@ if("mboost" %in% installed.packages())
                                             Petal.Width + Species
     mod2 <- mboost::glmboost(form, data=datasets::iris,
                              family=mboost::Binomial(type="glm", link="logit"))
-    res <- c(`(Intercept)`=-6.044810000043501,
-             Petal.Length=1.196437672791093,
-             Petal.Width=0.503517111271650,
-             Speciesvirginica=0.631822658418715)
+    res <- c(`(Intercept)`=-3.022405000021751,
+             Petal.Length=0.598218836395547,
+             Petal.Width=0.251758555635825,
+             Speciesvirginica=0.315911329209358)
     expect_equal(rec_round(sort(extract_coef(mod2))), rec_round(sort(res)))
+
+    form <- as.factor(Sepal.Length > 6.1) ~ Sepal.Width + Petal.Length +
+        Petal.Width + Species
+    mod3 <- mboost::glmboost(form, data=datasets::iris,
+                             family=mboost::Binomial(type="adaboost", link="logit"))
+    res <- c(`(Intercept)`=-8.657368037916719,
+             Sepal.Width=0.897057704932526,
+             Petal.Length=1.189244056178324,
+             Petal.Width=0.292776837764540,
+             Speciesvirginica=0.341718633258698)
+    expect_equal(rec_round(sort(extract_coef(mod3))), rec_round(sort(res)))
   })
 }
 

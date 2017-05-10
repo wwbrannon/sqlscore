@@ -29,24 +29,17 @@ function(object)
 extract_coef.glmboost <-
 function(object)
 {
-  #FIXME mboost names
-  families <- c("Binomial Distribution (similar to glm)", # mboost::Binomial(type="glm")
-                "Poisson Likelihood", # mboost::Poisson
-                "Squared Error (Regression)", # mboost::GaussReg
-                "Negative Gamma Likelihood" # mboost::GammaReg
-  )
-  stopifnot(object$family@name %in% families)
-
   # suppress coef.glmboost's message so we can print our own
   cf <- captureConditions(stats::coef(object, off2int=TRUE))$value
 
-  # mboost internally recodes binomial DVs to -1 and +1, so the coefficients
-  # are half those returned by glm. If we have a binomial model, let's fix this
-  # and return twice the fitted coefficients, with a message
-  if(object$family@name == families[1])
+  # mboost internally recodes DVs to -1 and +1 in one particular case (the
+  # logit fit from Binomial_adaboost()), so the coefficients are half those
+  # returned by glm. If we have a binomial model, let's fix this and return
+  # twice the fitted coefficients, with a message
+  if(object$family@name == "Negative Binomial Likelihood (logit link)")
   {
-    message("\nNOTE: Coefficients from a glmboost Binomial model are 1/2 the ",
-            "coefficients\nfrom a model fit by ", "glm(... , family = 'binomial').\n",
+    message("\nNOTE: Coefficients from glmboost's Binomial_adaboost logit model \n",
+            "are 1/2 the coefficients from a model fit by glm(... , family = 'binomial').\n",
             "sqlscore scales these coefficients by 2 to put them on the same scale as glm.\n")
     sc <- 2
   }
