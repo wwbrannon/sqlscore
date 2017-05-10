@@ -2,27 +2,9 @@
 % Please edit documentation in R/score_expression.R
 \name{score_expression}
 \alias{score_expression}
-\alias{score_expression.default}
-\alias{score_expression.glm}
-\alias{score_expression.lm}
-\alias{score_expression.bayesglm}
-\alias{score_expression.glmboost}
-\alias{score_expression.cv.glmnet}
 \title{Unevaluated prediction expressions for models}
 \usage{
 score_expression(mod, response = NULL)
-
-\method{score_expression}{default}(mod, response = NULL)
-
-\method{score_expression}{glm}(mod, response = NULL)
-
-\method{score_expression}{lm}(mod, response = NULL)
-
-\method{score_expression}{bayesglm}(mod, response = NULL)
-
-\method{score_expression}{glmboost}(mod, response = NULL)
-
-\method{score_expression}{cv.glmnet}(mod, response = NULL)
 }
 \arguments{
 \item{mod}{A supported model object.}
@@ -31,8 +13,6 @@ score_expression(mod, response = NULL)
 }
 \value{
 An unevaluated R call object representing the response function of the linear predictor.
-
-None
 }
 \description{
 Generate an unevaluated call corresponding to the predict step of the passed
