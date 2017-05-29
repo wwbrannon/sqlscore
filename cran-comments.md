@@ -1,3 +1,6 @@
+Resubmission before dbplyr release to fix failing checks (because of an update
+to package mboost).
+
 ## Test environments
 * ubuntu 12.04.5 LTS (R-oldrel, R-release and R-devel) via travis-ci
 * Mac OSX 10.11 (R-oldrel and R-release) via travis-ci
