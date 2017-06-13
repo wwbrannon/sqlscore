@@ -1,9 +1,6 @@
 language: r
 cache: packages
 
-before_script:
-  - Rscript -e 'devtools::install_github("hadley/dbplyr"); if (!all(c("dbplyr") %in% installed.packages())) { q(status = 1, save = "no")}'
-
 r:
   - oldrel
   - release
