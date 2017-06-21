@@ -15,8 +15,8 @@ Hash: 4aef5bda70897c1663d5b8bae2f4419a
 
 Package: R6
 Source: CRAN
-Version: 2.2.1
-Hash: 530f0b839551f96ec991ce4f93156ee1
+Version: 2.2.2
+Hash: b2366cd9d2f3851a5704b4e192b985c2
 
 Package: Rcpp
 Source: CRAN
