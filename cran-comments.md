@@ -1,5 +1,4 @@
-Resubmission before dbplyr release to fix failing checks (because of an update
-to package mboost).
+Resubmitting after dbplyr has been released to CRAN.
 
 ## Test environments
 * ubuntu 12.04.5 LTS (R-oldrel, R-release and R-devel) via travis-ci
