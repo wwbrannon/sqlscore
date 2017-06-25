@@ -40,13 +40,11 @@ NULL
 # @param schema The schema name.
 # @param con An optional DBI connection to control the details of SQL generation
 #
-# @return A dplyr/dbplyr SQL object representing the fully qualified and escaped
+# @return A dbplyr SQL object representing the fully qualified and escaped
 #         table name.
 fqtn <-
 function(table, catalog=NULL, schema=NULL, con=NULL)
 {
-  build_sql <- get_build_sql()
-
   if(is.null(table) || table == "")
     stop("Bad table name")
 
@@ -79,7 +77,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
   if(!is.null(con))
     dp$con <- con
 
-  do.call(build_sql, dp)
+  do.call(dbplyr::build_sql, dp)
 
 }
 
@@ -115,7 +113,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' @param response The name of a custom response function to apply to the linear predictor.
 #' @param con An optional DBI connection to control the details of SQL generation.
 #'
-#' @return A dplyr/dbplyr SQL object representing the SELECT statement.
+#' @return A dbplyr SQL object representing the SELECT statement.
 #'
 #' @examples
 #' # Basic select statements
@@ -149,10 +147,6 @@ select_statement <-
 function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
          response=NULL, con=NULL)
 {
-  ident <- get_ident()
-  build_sql <- get_build_sql()
-  translate_sql <- get_translate_sql()
-
   #Fully qualify and escape the src table
   src <- fqtn(src_table, src_catalog, src_schema, con=con)
 
@@ -162,12 +156,12 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 
   for(i in seq_along(pk))
   {
-    parts[[length(parts) + 1]] <- ident(pk[i])
+    parts[[length(parts) + 1]] <- dbplyr::ident(pk[i])
     parts[[length(parts) + 1]] <- ", "
   }
 
   se <- list(score_expression(mod, response=response), con=con)
-  parts[[length(parts) + 1]] <- do.call(translate_sql, se)
+  parts[[length(parts) + 1]] <- do.call(dbplyr::translate_sql, se)
 
   parts[[length(parts) + 1]] <- " FROM "
   parts[[length(parts) + 1]] <- src
@@ -175,7 +169,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
   #We're leaving off the terminating semicolon to let people more easily
   #tack on concluding incantations for the select (string munging is great)
   parts$con <- con
-  do.call(build_sql, parts)
+  do.call(dbplyr::build_sql, parts)
 }
 
 #' Generate a CREATE TABLE statement from a model
@@ -215,7 +209,7 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' @param response The name of a custom response function to apply to the linear predictor.
 #' @param con An optional DBI connection to control the details of SQL generation.
 #'
-#' @return A dplyr/dbplyr SQL object representing the SELECT statement.
+#' @return A dbplyr SQL object representing the SELECT statement.
 #'
 #' @examples
 #' # Basic create statements
@@ -258,8 +252,6 @@ function(mod, dest_table, src_table,
   # this statement rather than just munging text, but the ones available
   # for R are underdeveloped. d(b)plyr comes closest but can't quite do this.
 
-  build_sql <- get_build_sql()
-
   #Fully qualify and escape the dest table
   dest <- fqtn(dest_table, dest_catalog, dest_schema, con=con)
 
@@ -280,5 +272,5 @@ function(mod, dest_table, src_table,
   #We're leaving off the terminating semicolon to let people more easily
   #tack on concluding incantations for the select (string munging is great)
   parts$con <- con
-  do.call(build_sql, parts)
+  do.call(dbplyr::build_sql, parts)
 }

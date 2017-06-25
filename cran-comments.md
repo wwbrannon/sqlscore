@@ -1,12 +1,10 @@
-Resubmitting after dbplyr has been released to CRAN.
+Resubmitting as per CRAN maintainers without backward compatibility code for dplyr 0.5.0.
 
 ## Test environments
 * ubuntu 12.04.5 LTS (R-oldrel, R-release and R-devel) via travis-ci
 * Mac OSX 10.11 (R-oldrel and R-release) via travis-ci
 * Solaris 11 (R-oldrel) via VirtualBox
 * win-builder (R-release and R-devel)
-
-I've tested with both dplyr 0.5.0 and the current versions of dplyr/dbplyr.
 
 ## R CMD check results
 There were no ERRORs or WARNINGs.

@@ -1,22 +1,5 @@
 ## Helper functions for package tests
 
-# A wrapper around dplyr 0.6.0's move of this function to dbplyr
-get_sql <-
-function()
-{
-    if (utils::packageVersion("dplyr") > "0.5.0")
-    {
-        dplyr::check_dbplyr()
-        fn <- dbplyr::sql
-    }
-    else
-    {
-        fn <- dplyr::sql
-    }
-
-    fn
-}
-
 # Recursively round an object's numeric components
 #
 # Take an object and return it with numeric components rounded to a some

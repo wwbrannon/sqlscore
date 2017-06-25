@@ -35,7 +35,7 @@ create_statement(mod, dest_table, src_table, dest_schema = NULL,
 \item{con}{An optional DBI connection to control the details of SQL generation.}
 }
 \value{
-A dplyr/dbplyr SQL object representing the SELECT statement.
+A dbplyr SQL object representing the SELECT statement.
 }
 \description{
 Generate a CREATE TABLE statement to score the passed model on a preexisting
