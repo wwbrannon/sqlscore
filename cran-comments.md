@@ -7,18 +7,13 @@ Resubmitting as per CRAN maintainers without backward compatibility code for dpl
 * win-builder (R-release and R-devel)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs.
+There were no ERRORs or WARNINGs. win-builder produced the following NOTE:
 
-While testing locally with the new versions of dbplyr/dplyr, there
-was the following NOTE:
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'William Brannon <wwbrannon@email.wm.edu>'
 
-checking dependencies in R code ... NOTE
-Missing or unexported objects:
-  ‘dplyr::build_sql’ ‘dplyr::translate_sql’
-
-A similar NOTE occurs if using dplyr 0.5.0. Both are unavoidable, because
-they occur in backward-compatibility code that wraps around the change in
-API from dplyr 0.5.0 to the current API.
+Possibly mis-spelled words in DESCRIPTION:
+  SQL (4:33, 5:48, 7:16)
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
