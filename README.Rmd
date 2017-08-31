@@ -1,9 +1,5 @@
 <!-- rmarkdown v1 -->
 
----
-output: github_document
----
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r set-options, echo=FALSE, cache=FALSE}
