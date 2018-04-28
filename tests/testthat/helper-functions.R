@@ -22,11 +22,15 @@ function(x, digits=8)
   } else if(is.call(x))
   {
     lt <- as.list(x)
-    return(as.call(lapply(lt, rec_round)))
+
+    # FIXME doesn't pass digits arg down
+    return(as.call(lapply(lt, function(y) rec_round(y, digits=digits))))
   } else if(is.expression(x))
   {
     lt <- as.list(x)
-    return(as.expression(lapply(lt, rec_round)))
+
+    # FIXME doesn't pass digits arg down
+    return(as.expression(lapply(lt, function(y) rec_round(y, digits=digits))))
   } else
   {
     return(x)

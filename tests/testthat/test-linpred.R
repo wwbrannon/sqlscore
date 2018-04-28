@@ -8,7 +8,7 @@ test_that("glm objects are handled correctly", {
                     Petal.Width * -0.315155173326474 + ifelse(Species =="versicolor", 1, 0) * -0.723561957780729 +
                     ifelse(Species == "virginica", 1, 0) * -1.02349781449083)[[1]]
   expect_equal(rec_round(linpred(mod1)), rec_round(res))
-  
+
   mod2 <- glm(Sepal.Length > 5.1 ~ Sepal.Width + Petal.Length + Petal.Width*Species,
               data=datasets::iris, family=binomial("logit"))
   res <- expression(1 * -28.1705053449217 + Sepal.Width * 6.14207788587817 + Petal.Length * 4.57943291393518 +
@@ -17,13 +17,13 @@ test_that("glm objects are handled correctly", {
                     Petal.Width * ifelse(Species == "versicolor", 1, 0) * 11.7958718975238 +
                     Petal.Width * ifelse(Species == "virginica", 1, 0) * 4.99663234765107)[[1]]
   expect_equal(rec_round(linpred(mod2)), rec_round(res))
-  
+
   dat <- datasets::iris
   dat$Speciesvirginica <- runif(nrow(dat))
   mod3 <- glm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Width + Species + Speciesvirginica,
               data=dat, family=binomial("logit"))
   expect_error(linpred(mod3))
-  
+
   mod4 <- glm(Sepal.Length > 5.5 ~ Sepal.Width + Petal.Length +
               I(Petal.Length^2) + Petal.Width*Species, data=datasets::iris,
               family=binomial("logit"))
@@ -35,7 +35,7 @@ test_that("glm objects are handled correctly", {
                     Petal.Width * ifelse(Species == "versicolor", 1, 0) * -11.0712541155635 +
                     Petal.Width * ifelse(Species == "virginica", 1, 0) * -2.8775803835078)[[1]]
   expect_equal(rec_round(linpred(mod4)), rec_round(res))
-  
+
   mod5 <- glm(Sepal.Length > 5.4 ~ Sepal.Width + Petal.Length + I(Petal.Length^2)*Petal.Width + Species,
               data=datasets::iris, family=binomial("logit"))
   res <- expression(1 * -12.5343421022915 + Sepal.Width * 4.89428432396798 + Petal.Length * -6.83191369596457 +
@@ -55,7 +55,7 @@ test_that("lm objects are handled correctly", {
                     ifelse(Species == "versicolor", 1, 0) * -0.723561957780729 +
                     ifelse(Species == "virginica", 1, 0) * -1.02349781449083)[[1]]
   expect_equal(rec_round(linpred(mod1)), rec_round(res))
-  
+
   mod2 <- lm(Sepal.Length > 5.1 ~ Sepal.Width + Petal.Length + Petal.Width*Species,
              data=datasets::iris)
   res <- expression(1 * -1.25282405639425 + Sepal.Width * 0.418955303990332 +
@@ -65,12 +65,12 @@ test_that("lm objects are handled correctly", {
                     Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.138972137824933 +
                     Petal.Width * ifelse(Species == "virginica", 1, 0) * -0.120777639794957)[[1]]
   expect_equal(rec_round(linpred(mod2)), rec_round(res))
-  
+
   dat <- datasets::iris
   dat$Speciesvirginica <- runif(nrow(dat))
   mod3 <- lm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Width + Species + Speciesvirginica, data=dat)
   expect_error(linpred(mod3))
-  
+
   mod4 <- lm(Sepal.Length > 5.5 ~ Sepal.Width + Petal.Length +
               I(Petal.Length^2) + Petal.Width*Species, data=datasets::iris)
   res <- expression(1 * -1.43943112575401 + Sepal.Width * 0.249854275927215 +
@@ -81,7 +81,7 @@ test_that("lm objects are handled correctly", {
                     Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.378876215002793 +
                     Petal.Width * ifelse(Species == "virginica", 1, 0) * 0.00251914065652157)[[1]]
   expect_equal(rec_round(linpred(mod4)), rec_round(res))
-  
+
   mod5 <- lm(Sepal.Length > 5.4 ~ Sepal.Width + Petal.Length + I(Petal.Length^2)*Petal.Width + Species,
              data=datasets::iris)
   res <- expression(1 * -1.10520884181372 + Sepal.Width * 0.251100958359728 +
@@ -104,7 +104,7 @@ if("arm" %in% installed.packages())
                       ifelse(Species == "versicolor", 1, 0) * -0.710871735643408 +
                       ifelse(Species == "virginica", 1, 0) * -1.00574899620441)[[1]]
     expect_equal(rec_round(linpred(mod1)), rec_round(res))
-    
+
     mod2 <- arm::bayesglm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width*Species,
                           data=datasets::iris)
     res <- expression(1 * 1.99545967215538 + Sepal.Width * 0.506995212999199 +
@@ -114,13 +114,13 @@ if("arm" %in% installed.packages())
                       Petal.Width * ifelse(Species == "versicolor", 1, 0) * -0.744858892123401 +
                       Petal.Width * ifelse(Species == "virginica", 1, 0) * -0.25531224497399)[[1]]
     expect_equal(rec_round(linpred(mod2)), rec_round(res))
-    
+
     dat <- datasets::iris
     dat$Speciesvirginica <- runif(nrow(dat))
     mod3 <- arm::bayesglm(Sepal.Length > 5.0 ~ Sepal.Width + Petal.Width + Species + Speciesvirginica,
                           data=dat)
     expect_error(linpred(mod3))
-    
+
     mod4 <- arm::bayesglm(Sepal.Length > 5.5 ~ Sepal.Width + Petal.Length +
                           I(Petal.Length^2) + Petal.Width*Species, data=datasets::iris)
     res <- expression(1 * -1.4346899233495 + Sepal.Width * 0.249586998117276 +
@@ -131,7 +131,7 @@ if("arm" %in% installed.packages())
                       Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.352029568620347 +
                       Petal.Width * ifelse(Species == "virginica", 1, 0) * -0.015597021874813)[[1]]
     expect_equal(rec_round(linpred(mod4)), rec_round(res))
-    
+
     mod5 <- arm::bayesglm(Sepal.Length > 5.4 ~ Sepal.Width + Petal.Length +
                           I(Petal.Length^2)*Petal.Width + Species, data=datasets::iris)
     res <- expression(1 * -1.10543449173636 + Sepal.Width * 0.249139673873688 +
@@ -154,7 +154,7 @@ if("mboost" %in% installed.packages())
                       Petal.Length * 0.460907829277574 +
                       ifelse(Species == "virginica", 1, 0) * -0.0192462659183535)[[1]]
     expect_equal(rec_round(linpred(mod1)), rec_round(res))
-    
+
     mod2 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + I(Petal.Length^2) + Petal.Length +
                              Petal.Width*Species, data=datasets::iris)
     res <- expression(1 * 3.43698205637091 + Sepal.Width * 0.42137619505081 +
@@ -162,7 +162,7 @@ if("mboost" %in% installed.packages())
                       ifelse(Species == "versicolor", 1, 0) * 0.0510858703485424 +
                       Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.0912283527275175)[[1]]
     expect_equal(rec_round(linpred(mod2)), rec_round(res))
-    
+
     mod4 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + I(Petal.Length^2) +
                              Petal.Width*Species, data=datasets::iris)
     res <- expression(1 * 3.43698205637091 + Sepal.Width * 0.42137619505081 +
@@ -170,7 +170,7 @@ if("mboost" %in% installed.packages())
                       ifelse(Species == "versicolor", 1, 0) * 0.0510858703485424 +
                       Petal.Width * ifelse(Species == "versicolor", 1, 0) * 0.0912283527275175)[[1]]
     expect_equal(rec_round(linpred(mod4)), rec_round(res))
-    
+
     mod5 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length +
                             I(Petal.Length^2)*Petal.Width + Species, data=datasets::iris)
     res <- expression(1 * 3.41937220521108 + Sepal.Width * 0.426321405614481 +
@@ -188,6 +188,7 @@ if("glmnet" %in% installed.packages())
                               datasets::iris$Sepal.Length, nfolds=nrow(datasets::iris), grouped=FALSE)
     res <- expression(1 * 2.37744529257366 + Sepal.Width * 0.556167083965938 +
                       Petal.Length * 0.499465780735234 + Petal.Width * -0.0929620855657578)[[1]]
-    expect_equal(rec_round(linpred(mod1)), rec_round(res))
+    expect_equal(rec_round(linpred(mod1), digits=7), rec_round(res, digits=7))
   })
 }
+
