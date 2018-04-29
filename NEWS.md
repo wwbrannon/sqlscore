@@ -1,3 +1,8 @@
+## sqlscore 0.1.3
+This version includes:
+
+* Improved tests, including fixes needed after an upgrade to glmnet.
+
 ## sqlscore 0.1.2
 This version includes:
 
