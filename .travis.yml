@@ -1,6 +1,11 @@
 language: r
 cache: packages
 
+addons:
+  apt:
+    packages:
+      - libnlopt-dev
+
 r:
   - oldrel
   - release
