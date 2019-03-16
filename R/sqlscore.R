@@ -35,15 +35,20 @@ NULL
 # and table), escape all three and join them together to produce the fully
 # qualified table name. Only the table name is required.
 #
+# An open database connection can be passed as the `con` argument, or the
+# `dbplyr::simulate_*` functions can be used in applications which don't have
+# a DB connection when they need to generate SQL.
+#'
 # @param table The unqualified table name.
 # @param catalog The catalog name.
 # @param schema The schema name.
-# @param con An optional DBI connection to control the details of SQL generation
+# @param con A DBI connection to control the details of SQL generation;
+#   defaults to dbplyr::simulate_dbi() for the best guess at portable SQL.
 #
 # @return A dbplyr SQL object representing the fully qualified and escaped
 #         table name.
 fqtn <-
-function(table, catalog=NULL, schema=NULL, con=NULL)
+function(table, catalog=NULL, schema=NULL, con=dbplyr::simulate_dbi())
 {
   if(is.null(table) || table == "")
     stop("Bad table name")
@@ -74,8 +79,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 
   dp[[length(dp) + 1]] <- c(sql_escape_ident(table))
 
-  if(!is.null(con))
-    dp$con <- con
+  dp$con <- con
 
   do.call(dbplyr::build_sql, dp)
 
@@ -88,6 +92,10 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' database, with no need to fetch data into R. Models need not be GLMs, but
 #' their prediction steps must consist of applying a response function to
 #' a linear predictor.
+#'
+#' An open database connection can be passed as the `con` argument, or the
+#' `dbplyr::simulate_*` functions can be used in applications which don't have
+#' a DB connection when they need to generate SQL.
 #'
 #' @section Supported packages:
 #' Specific packages and models that are known to work include: glm and lm from
@@ -111,7 +119,8 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' @param src_catalog The DB catalog of the source table.
 #' @param pk A vector of primary key column names.
 #' @param response The name of a custom response function to apply to the linear predictor.
-#' @param con An optional DBI connection to control the details of SQL generation.
+#' @param con A DBI connection to control the details of SQL generation;
+#'   defaults to dbplyr::simulate_dbi() for the best guess at portable SQL.
 #'
 #' @return A dbplyr SQL object representing the SELECT statement.
 #'
@@ -145,7 +154,7 @@ function(table, catalog=NULL, schema=NULL, con=NULL)
 #' @export select_statement
 select_statement <-
 function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
-         response=NULL, con=NULL)
+         response=NULL, con=dbplyr::simulate_dbi())
 {
   #Fully qualify and escape the src table
   src <- fqtn(src_table, src_catalog, src_schema, con=con)
@@ -180,6 +189,10 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' their prediction steps must consist of applying a response function to
 #' a linear predictor.
 #'
+#' An open database connection can be passed as the `con` argument, or the
+#' `dbplyr::simulate_*` functions can be used in applications which don't have
+#' a DB connection when they need to generate SQL.
+#'
 #' @section Supported packages:
 #' Specific packages and models that are known to work include: glm and lm from
 #' package:stats, cv.glmnet from package:glmnet, glmboost from package:mboost,
@@ -207,7 +220,8 @@ function(mod, src_table, src_schema=NULL, src_catalog=NULL, pk=c("id"),
 #' @param temporary Whether the destination table should be a temporary table.
 #' @param pk A vector of primary key column names.
 #' @param response The name of a custom response function to apply to the linear predictor.
-#' @param con An optional DBI connection to control the details of SQL generation.
+#' @param con A DBI connection to control the details of SQL generation;
+#'   defaults to dbplyr::simulate_dbi() for the best guess at portable SQL.
 #'
 #' @return A dbplyr SQL object representing the SELECT statement.
 #'
@@ -246,11 +260,12 @@ create_statement <-
 function(mod, dest_table, src_table,
          dest_schema=NULL, dest_catalog=NULL, src_schema=NULL,
          src_catalog=NULL, drop=FALSE, temporary=FALSE,
-         pk=c("id"), response=NULL, con=NULL)
+         pk=c("id"), response=NULL, con=dbplyr::simulate_dbi())
 {
   # Ideally, we'd use some kind of object-relational mapper to build
   # this statement rather than just munging text, but the ones available
-  # for R are underdeveloped. d(b)plyr comes closest but can't quite do this.
+  # for R are underdeveloped. dbplyr comes closest but can't quite do this -
+  # in particular, it doesn't support CREATE TABLE AS SELECT
 
   #Fully qualify and escape the dest table
   dest <- fqtn(dest_table, dest_catalog, dest_schema, con=con)
