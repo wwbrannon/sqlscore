@@ -1,3 +1,8 @@
+## sqlscore 0.1.4
+This version includes:
+
+* Compatibility with the new version 1.4.0 of dbplyr. Documentation also clarifies the possibility of passing `dbplyr::simulate_*` objects for offline generation of different SQL dialects.
+
 ## sqlscore 0.1.3
 This version includes:
 
