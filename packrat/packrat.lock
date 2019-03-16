@@ -88,6 +88,12 @@ Source: CRAN
 Version: 0.19-2
 Hash: e0d016096b2ba2fc99e9ad8d168697dd
 
+Package: covr
+Source: CRAN
+Version: 3.2.1
+Hash: b1dab7f44fae6114c222cee94d6acd63
+Requires: crayon, digest, httr, jsonlite, rex, withr
+
 Package: crayon
 Source: CRAN
 Version: 1.3.4
@@ -205,6 +211,11 @@ Package: jsonlite
 Source: CRAN
 Version: 1.6
 Hash: 5f969e213e966135393e3e304abf3f49
+
+Package: lazyeval
+Source: CRAN
+Version: 0.2.2
+Hash: 563563691bea3cde6945a98996d7c166
 
 Package: libcoin
 Source: CRAN
@@ -350,6 +361,12 @@ Package: remotes
 Source: CRAN
 Version: 2.0.2
 Hash: cfcf5e119ed5e6af4b47530ba59101f3
+
+Package: rex
+Source: CRAN
+Version: 1.1.2
+Hash: 57541aaae58f1a284a398f5c62c95097
+Requires: lazyeval, magrittr
 
 Package: rlang
 Source: CRAN

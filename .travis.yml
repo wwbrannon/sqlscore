@@ -1,6 +1,10 @@
 language: r
 cache: packages
 
+r_packages:
+  - covr
+  - devtools
+
 addons:
   apt:
     packages:
@@ -10,14 +14,14 @@ env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_: false
 
+os:
+  - linux
+  - osx
+
 r:
   - oldrel
   - release
   - devel
-
-os:
-  - linux
-  - osx
 
 matrix:
   fast_finish: true
