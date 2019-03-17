@@ -423,6 +423,12 @@ Source: CRAN
 Version: 0.9.0
 Hash: e5e648a0944df6ea634d8173d09e236f
 
+Package: rversions
+Source: CRAN
+Version: 1.0.3
+Hash: 44837671df6bf1d0b863dc6f83f42a16
+Requires: curl, xml2
+
 Package: sessioninfo
 Source: CRAN
 Version: 1.1.1
