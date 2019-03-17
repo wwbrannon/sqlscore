@@ -6,14 +6,18 @@ addons:
     packages:
       - libnlopt-dev
 
-r:
-  - oldrel
-  - release
-  - devel
+env:
+  global:
+    - _R_CHECK_FORCE_SUGGESTS_: false
 
 os:
   - linux
   - osx
+
+r:
+  - oldrel
+  - release
+  - devel
 
 matrix:
   fast_finish: true
@@ -24,3 +28,5 @@ branches:
   only:
       - master
 
+after_success:
+  - Rscript -e 'covr::codecov()'

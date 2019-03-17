@@ -6,6 +6,7 @@
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/sqlscore)](https://cran.r-project.org/package=sqlscore)
 [![Build Status](https://img.shields.io/travis/wwbrannon/sqlscore.svg?style=flat)](https://travis-ci.org/wwbrannon/sqlscore)
+[![Coverage Status](https://codecov.io/gh/wwbrannon/sqlscore/branch/master/graph/badge.svg)](https://codecov.io/github/wwbrannon/sqlscore?branch=master)
 [![Downloads](https://cranlogs.r-pkg.org/badges/sqlscore)](https://cran.r-project.org/package=sqlscore)
 [![License](https://img.shields.io/:license-mit-blue.svg?style=flat)](https://wwbrannon.mit-license.org/)
 
@@ -36,11 +37,7 @@ create_statement(mod, src_table="iris", dest_table="iris_scores", pk=c("id"))
 
 
 ```
-#> <SQL> CREATE TABLE "iris_scores" AS SELECT id, 1.0 * 2.17126629215507 +
-"Sepal.Width" * 0.495888938388551 + "Petal.Length" * 0.829243912234806 +
-"Petal.Width" * -0.315155173326474 + CASE WHEN ("Species" = 'versicolor') THEN
-(1.0) ELSE (0.0) END * -0.723561957780729 + CASE WHEN ("Species" = 'virginica')
-THEN (1.0) ELSE (0.0) END * -1.02349781449083 FROM "iris"
+#> Error: `con` must not be NULL
 ```
 
 To get a SELECT statement that's not wrapped in a CREATE TABLE (so that, e.g.,
@@ -54,11 +51,7 @@ select_statement(mod, src_table="iris", pk=c("id"))
 
 
 ```
-#> <SQL> SELECT id, 1.0 * 2.17126629215507 + "Sepal.Width" * 0.495888938388551
-+ "Petal.Length" * 0.829243912234806 + "Petal.Width" * -0.315155173326474 +
-CASE WHEN ("Species" = 'versicolor') THEN (1.0) ELSE (0.0) END *
--0.723561957780729 + CASE WHEN ("Species" = 'virginica') THEN (1.0) ELSE (0.0)
-END * -1.02349781449083 FROM "iris"
+#> Error: `con` must not be NULL
 ```
 
 Helper functions include linpred(), which generates an R call object representing

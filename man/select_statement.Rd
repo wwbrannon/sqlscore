@@ -5,7 +5,7 @@
 \title{Generate a SELECT statement from a model}
 \usage{
 select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
-  pk = c("id"), response = NULL, con = NULL)
+  pk = c("id"), response = NULL, con = dbplyr::simulate_dbi())
 }
 \arguments{
 \item{mod}{A supported model object.}
@@ -20,7 +20,8 @@ select_statement(mod, src_table, src_schema = NULL, src_catalog = NULL,
 
 \item{response}{The name of a custom response function to apply to the linear predictor.}
 
-\item{con}{An optional DBI connection to control the details of SQL generation.}
+\item{con}{A DBI connection to control the details of SQL generation;
+defaults to dbplyr::simulate_dbi() for the best guess at portable SQL.}
 }
 \value{
 A dbplyr SQL object representing the SELECT statement.
@@ -31,6 +32,11 @@ database table. The statement will generate predictions entirely in the
 database, with no need to fetch data into R. Models need not be GLMs, but
 their prediction steps must consist of applying a response function to
 a linear predictor.
+}
+\details{
+An open database connection can be passed as the `con` argument, or the
+`dbplyr::simulate_*` functions can be used in applications which don't have
+a DB connection when they need to generate SQL.
 }
 \section{Supported packages}{
 

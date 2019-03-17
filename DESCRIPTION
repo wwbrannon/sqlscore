@@ -1,6 +1,6 @@
 Package: sqlscore
 Authors@R: c(person("William", "Brannon", email="wwbrannon@email.wm.edu", role=c("aut", "cre")))
-Version: 0.1.3
+Version: 0.1.4
 Title: Utilities for Generating SQL Queries from Model Objects
 Description: Provides utilities for generating SQL queries (particularly CREATE
     TABLE statements) from R model objects. The most important use case is
@@ -18,5 +18,6 @@ Suggests:
     testthat,
     arm,
     glmnet,
-    mboost
-RoxygenNote: 6.0.1
+    mboost,
+    covr
+RoxygenNote: 6.1.1
