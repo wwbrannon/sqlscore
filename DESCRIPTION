@@ -18,5 +18,6 @@ Suggests:
     testthat,
     arm,
     glmnet,
-    mboost
+    mboost,
+    covr
 RoxygenNote: 6.1.1
