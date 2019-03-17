@@ -61,6 +61,11 @@ Source: CRAN
 Version: 1.1.3
 Hash: a0b8191e6bd2fe71aadd4678bb8f3c98
 
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
+
 Package: callr
 Source: CRAN
 Version: 3.2.0
@@ -87,6 +92,11 @@ Package: coda
 Source: CRAN
 Version: 0.19-2
 Hash: e0d016096b2ba2fc99e9ad8d168697dd
+
+Package: commonmark
+Source: CRAN
+Version: 1.7
+Hash: 77f4ba718e2bad1877ef26e48cf8fa43
 
 Package: covr
 Source: CRAN
@@ -395,6 +405,13 @@ Source: CRAN
 Version: 0.3.1
 Hash: 1176a91e0c23d4fc8f48bc5704a6f826
 
+Package: roxygen2
+Source: CRAN
+Version: 6.1.1
+Hash: 8d50e18cdfe6805761db35b027b254eb
+Requires: R6, Rcpp, brew, commonmark, desc, digest, pkgload, purrr,
+    stringi, stringr, xml2
+
 Package: rprojroot
 Source: CRAN
 Version: 1.3-2
@@ -477,6 +494,12 @@ Package: xfun
 Source: CRAN
 Version: 0.5
 Hash: 384622a18a85624029dec83d26e588a6
+
+Package: xml2
+Source: CRAN
+Version: 1.2.0
+Hash: 3f00e5347a6d7ccad2237fe1bc1df6d0
+Requires: Rcpp
 
 Package: xopen
 Source: CRAN
