@@ -28,7 +28,7 @@ test_that("lm coefficients are extracted correctly", {
 })
 
 # Only run if installed
-if("arm" %in% installed.packages())
+if(require("arm"))
 {
   test_that("bayesglm coefficients are extracted correctly", {
     mod1 <- arm::bayesglm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
@@ -41,7 +41,7 @@ if("arm" %in% installed.packages())
 }
 
 # Only run if installed
-if("mboost" %in% installed.packages())
+if(require("mboost"))
 {
   test_that("glmboost coefficients are extracted correctly", {
     mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
@@ -74,7 +74,7 @@ if("mboost" %in% installed.packages())
 }
 
 # Only run if installed
-if("glmnet" %in% installed.packages())
+if(require("glmnet"))
 {
   test_that("cv.glmnet coefficients are extracted correctly", {
     mod1 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),

@@ -22,7 +22,7 @@ test_that("lm offsets are extracted correctly", {
 })
 
 # Only run if installed
-if("arm" %in% installed.packages())
+if(require("arm"))
 {
   test_that("bayesglm offsets are extracted correctly", {
     mod1 <- arm::bayesglm(Sepal.Length ~ Sepal.Width + Petal.Length + offset(Petal.Width) + Species,

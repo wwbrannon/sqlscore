@@ -119,7 +119,7 @@ test_that("1/mu^2 links are handled correctly", {
   expect_equal(rec_round(score_expression(mod1)), rec_round(res))
 })
 
-if("mboost" %in% installed.packages())
+if(require("mboost"))
 {
   test_that("Gaussian glmboost is handled correctly", {
     mod1 <- mboost::glmboost(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width + Species,
@@ -167,7 +167,7 @@ if("mboost" %in% installed.packages())
   })
 }
 
-if("glmnet" %in% installed.packages())
+if(require("glmnet"))
 {
   test_that("cv.glmnet is handled correctly", {
     mod1 <- glmnet::cv.glmnet(as.matrix(datasets::iris[, c("Sepal.Width", "Petal.Length", "Petal.Width")]),
