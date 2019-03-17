@@ -37,7 +37,12 @@ create_statement(mod, src_table="iris", dest_table="iris_scores", pk=c("id"))
 
 
 ```
-#> Error: `con` must not be NULL
+#> <SQL> CREATE TABLE "iris_scores" AS SELECT id, 1.0 * 2.17126629215507 +
+`Sepal.Width` * 0.495888938388551 + `Petal.Length` * 0.829243912234806 +
+`Petal.Width` * -0.315155173326474 + CASE WHEN (`Species` = 'versicolor') THEN
+(1.0) WHEN NOT(`Species` = 'versicolor') THEN (0.0) END * -0.723561957780729 +
+CASE WHEN (`Species` = 'virginica') THEN (1.0) WHEN NOT(`Species` =
+'virginica') THEN (0.0) END * -1.02349781449083 FROM "iris"
 ```
 
 To get a SELECT statement that's not wrapped in a CREATE TABLE (so that, e.g.,
@@ -51,7 +56,12 @@ select_statement(mod, src_table="iris", pk=c("id"))
 
 
 ```
-#> Error: `con` must not be NULL
+#> <SQL> SELECT id, 1.0 * 2.17126629215507 + `Sepal.Width` * 0.495888938388551
++ `Petal.Length` * 0.829243912234806 + `Petal.Width` * -0.315155173326474 +
+CASE WHEN (`Species` = 'versicolor') THEN (1.0) WHEN NOT(`Species` =
+'versicolor') THEN (0.0) END * -0.723561957780729 + CASE WHEN (`Species` =
+'virginica') THEN (1.0) WHEN NOT(`Species` = 'virginica') THEN (0.0) END *
+-1.02349781449083 FROM "iris"
 ```
 
 Helper functions include linpred(), which generates an R call object representing
